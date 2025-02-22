@@ -47,7 +47,7 @@ addRoundedCorners(TitleBar, 2)
 -- Create "X" button to close the GUI
 local CloseButton = Instance.new("TextButton")
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
-CloseButton.Position = UDim2.new(1, -3, 1, -7)
+CloseButton.Position = UDim2.new(1, 4, 1, -5)
 CloseButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) 
 CloseButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 CloseButton.Text = "X"
