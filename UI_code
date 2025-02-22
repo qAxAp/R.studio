@@ -24,9 +24,11 @@ addRoundedCorners(Frame, 2)
 
 -- Create Title Bar
 local TitleBar = Instance.new("Frame")
-TitleBar.Size = UDim2.new(1, 0, 0, 30)
-TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TitleBar.Size = UDim2.new(1, 0, 0, 25)
+TitleBar.Position = UDim2.new(0, 0, 0, -25)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 TitleBar.Parent = Frame
+addRoundedCorners(TitleBar, 2)
 
 -- Create Close Button
 local CloseButton = Instance.new("TextButton")
@@ -127,7 +129,7 @@ end
 -- Define scripts for different tabs
 local tabScripts = {
     {
-        { "Dio fly", "https://raw.githubusercontent.com/qAxAp/DioFly/main/DioFly.lua')" },
+        { "Dio fly", "loadstring(game:HttpGet('https://raw.githubusercontent.com/qAxAp/DioFly/main/DioFly.lua'))()')" },
         { "Execute 2", "print('Script 2 Executed')" },
         { "Execute 3", "print('Script 3 Executed')" },
         { "Execute 4", "print('Script 4 Executed')" }
