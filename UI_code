@@ -1,62 +1,67 @@
+local player = game:GetService("Players").LocalPlayer
+local PlayerGui = player:WaitForChild("PlayerGui")
+
+-- Create main UI container
 local Freecam = Instance.new("ScreenGui")
 Freecam.Parent = PlayerGui
 
-local FreecamScript = Instance.new("LocalScript")
-FreecamScript.Parent = Freecam
-
-local LocalScript = Instance.new("LocalScript")
-LocalScript.Parent = PlayerGui
-
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = PlayerGui
-
+-- Create primary frame
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 457, 0, 233)
-Frame.Position = UDim2.new(0.277093589, 0, 0.220183492, 0)
-Frame.Parent = ScreenGui
+Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
+Frame.Parent = Freecam
 
-local InnerFrame1 = Instance.new("Frame")
-InnerFrame1.Size = UDim2.new(0, 130, 0, 202)
-InnerFrame1.Position = UDim2.new(0.0225225221, 0, 0.0442477874, 0)
-InnerFrame1.Parent = Frame
+-- Create side panel
+local SidePanel = Instance.new("Frame")
+SidePanel.Size = UDim2.new(0, 130, 0, 202)
+SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
+SidePanel.Parent = Frame
 
-local InnerFrame2 = Instance.new("Frame")
-InnerFrame2.Size = UDim2.new(0, 274, 0, 202)
-InnerFrame2.Position = UDim2.new(0.358108103, 0, 0.0442477874, 0)
-InnerFrame2.Parent = Frame
+-- Create main panel
+local MainPanel = Instance.new("Frame")
+MainPanel.Size = UDim2.new(0, 274, 0, 202)
+MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
+MainPanel.Parent = Frame
 
-local HeaderFrame = Instance.new("Frame")
-HeaderFrame.Size = UDim2.new(0, 457, 0, 25)
-HeaderFrame.Position = UDim2.new(-3.33890355e-08, 0, -0.107296139, 0)
-HeaderFrame.Parent = Frame
+-- Create title bar
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(0, 457, 0, 25)
+TitleBar.Position = UDim2.new(0, 0, -0.107, 0)
+TitleBar.Parent = Frame
 
-local function createButton(size, position, parent)
+-- Create buttons
+local function createButton(parent, position)
     local button = Instance.new("TextButton")
-    button.Size = size
+    button.Size = UDim2.new(0, 88, 0, 29)
     button.Position = position
+    button.Text = "Button"
     button.Parent = parent
-    return button
 end
 
-createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.111587986, 0), Frame)
-createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.270386279, 0), Frame)
-createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.437768251, 0), Frame)
-createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.596566498, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.115879826, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.270386279, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.437768251, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.60085839, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.115879826, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.274678111, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.442060083, 0), Frame)
-createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.596566498, 0), Frame)
+createButton(Frame, UDim2.new(0.067, 0, 0.111, 0))
+createButton(Frame, UDim2.new(0.067, 0, 0.270, 0))
+createButton(Frame, UDim2.new(0.067, 0, 0.437, 0))
+createButton(Frame, UDim2.new(0.067, 0, 0.596, 0))
 
+createButton(Frame, UDim2.new(0.389, 0, 0.115, 0))
+createButton(Frame, UDim2.new(0.389, 0, 0.270, 0))
+createButton(Frame, UDim2.new(0.389, 0, 0.437, 0))
+createButton(Frame, UDim2.new(0.389, 0, 0.600, 0))
+
+createButton(Frame, UDim2.new(0.610, 0, 0.115, 0))
+createButton(Frame, UDim2.new(0.610, 0, 0.274, 0))
+createButton(Frame, UDim2.new(0.610, 0, 0.442, 0))
+createButton(Frame, UDim2.new(0.610, 0, 0.596, 0))
+
+-- Create text label
 local TextLabel = Instance.new("TextLabel")
 TextLabel.Size = UDim2.new(0, 109, 0, 25)
-TextLabel.Position = UDim2.new(0, 0, -0.107296139, 0)
+TextLabel.Position = UDim2.new(0, 0, -0.107, 0)
+TextLabel.Text = "Title"
 TextLabel.Parent = Frame
 
+-- Create scrolling frame
 local ScrollingFrame = Instance.new("ScrollingFrame")
 ScrollingFrame.Size = UDim2.new(0, 129, 0, 202)
-ScrollingFrame.Position = UDim2.new(0.0225225072, 0, 0.0442478694, 0)
+ScrollingFrame.Position = UDim2.new(0.022, 0, 0.044, 0)
 ScrollingFrame.Parent = Frame
