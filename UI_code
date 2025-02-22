@@ -5,12 +5,20 @@ local PlayerGui = player:WaitForChild("PlayerGui")
 local Freecam = Instance.new("ScreenGui")
 Freecam.Parent = PlayerGui
 
+-- Function to add rounded corners
+local function addRoundedCorners(instance, radius)
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0, radius)
+    UICorner.Parent = instance
+end
+
 -- Create primary frame
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 457, 0, 233)
 Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Dark gray
 Frame.Parent = Freecam
+addRoundedCorners(Frame, 6)
 
 -- Create side panel
 local SidePanel = Instance.new("Frame")
@@ -18,6 +26,7 @@ SidePanel.Size = UDim2.new(0, 130, 0, 202)
 SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
 SidePanel.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Slightly lighter gray
 SidePanel.Parent = Frame
+addRoundedCorners(SidePanel, 6)
 
 -- Create main panel
 local MainPanel = Instance.new("Frame")
@@ -25,6 +34,7 @@ MainPanel.Size = UDim2.new(0, 274, 0, 202)
 MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
 MainPanel.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- Even lighter gray
 MainPanel.Parent = Frame
+addRoundedCorners(MainPanel, 6)
 
 -- Create title bar
 local TitleBar = Instance.new("Frame")
@@ -32,6 +42,7 @@ TitleBar.Size = UDim2.new(0, 457, 0, 25)
 TitleBar.Position = UDim2.new(0, 0, -0.107, 0)
 TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Darkest gray
 TitleBar.Parent = Frame
+addRoundedCorners(TitleBar, 6)
 
 -- Create buttons function
 local function createButton(parent, position, text)
@@ -42,6 +53,7 @@ local function createButton(parent, position, text)
     button.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
     button.Text = text
     button.Parent = parent
+    addRoundedCorners(button, 6)
 end
 
 -- Add buttons with labels
@@ -68,6 +80,7 @@ TextLabel.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Label background
 TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
 TextLabel.Text = "Title"
 TextLabel.Parent = Frame
+addRoundedCorners(TextLabel, 6)
 
 -- Create scrolling frame
 local ScrollingFrame = Instance.new("ScrollingFrame")
@@ -75,3 +88,4 @@ ScrollingFrame.Size = UDim2.new(0, 129, 0, 202)
 ScrollingFrame.Position = UDim2.new(0.022, 0, 0.044, 0)
 ScrollingFrame.BackgroundColor3 = Color3.fromRGB(90, 90, 90) -- Scrolling panel background
 ScrollingFrame.Parent = Frame
+addRoundedCorners(ScrollingFrame, 6)
