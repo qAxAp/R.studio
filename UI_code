@@ -73,6 +73,46 @@ local function createMainButton(parent, position, text, scriptCode)
     button.Parent = parent
     addRoundedCorners(button, 6)
 
+-- Close button
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0, 20, 0, 20)
+CloseButton.Position = UDim2.new(1, -25, 0, 2)
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.Text = "X"
+CloseButton.TextSize = 15
+CloseButton.Parent = TitleBar
+addRoundedCorners(CloseButton, 5)
+
+CloseButton.MouseButton1Click:Connect(function()
+    Freecam:Destroy()
+end)
+
+-- Dragging functionality
+local UIS = game:GetService("UserInputService")
+local dragging, dragStart, startPos
+
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = Frame.Position
+    end
+end)
+
+TitleBar.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+TitleBar.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
+end)
+
     button.MouseButton1Click:Connect(function()
         loadstring(scriptCode)()
     end)
@@ -147,3 +187,5 @@ end
 
 -- Initialize first tab
 updateMainPanel(1)
+
+
