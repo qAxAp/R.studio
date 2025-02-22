@@ -18,7 +18,7 @@ Frame.Size = UDim2.new(0, 457, 0, 233)
 Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Dark gray
 Frame.Parent = Freecam
-addRoundedCorners(Frame, 6)
+addRoundedCorners(Frame, 2)
 
 -- Create side panel
 local SidePanel = Instance.new("Frame")
@@ -26,7 +26,7 @@ SidePanel.Size = UDim2.new(0, 130, 0, 202)
 SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
 SidePanel.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Slightly lighter gray
 SidePanel.Parent = Frame
-addRoundedCorners(SidePanel, 6)
+addRoundedCorners(SidePanel, 3)
 
 -- Create main panel
 local MainPanel = Instance.new("Frame")
@@ -34,21 +34,21 @@ MainPanel.Size = UDim2.new(0, 274, 0, 202)
 MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
 MainPanel.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- Even lighter gray
 MainPanel.Parent = Frame
-addRoundedCorners(MainPanel, 6)
+addRoundedCorners(MainPanel, 10)
 
 -- Create title bar
 local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(0, 457, 0, 25)
 TitleBar.Position = UDim2.new(0, 0, -0.107, 0)
-TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Darkest gray
+TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Darkest gray
 TitleBar.Parent = Frame
-addRoundedCorners(TitleBar, 6)
+addRoundedCorners(TitleBar, 3)
 
 -- Create "X" button to close the GUI
 local CloseButton = Instance.new("TextButton")
-CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Size = UDim2.new(0, 10, 0, 10)
 CloseButton.Position = UDim2.new(1, -35, 0, -7)
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red color
+CloseButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Red color
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseButton.Text = "X"
 CloseButton.TextSize = 20
