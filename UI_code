@@ -9,54 +9,63 @@ Freecam.Parent = PlayerGui
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 457, 0, 233)
 Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
+Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40) -- Dark gray
 Frame.Parent = Freecam
 
 -- Create side panel
 local SidePanel = Instance.new("Frame")
 SidePanel.Size = UDim2.new(0, 130, 0, 202)
 SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
+SidePanel.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Slightly lighter gray
 SidePanel.Parent = Frame
 
 -- Create main panel
 local MainPanel = Instance.new("Frame")
 MainPanel.Size = UDim2.new(0, 274, 0, 202)
 MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
+MainPanel.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- Even lighter gray
 MainPanel.Parent = Frame
 
 -- Create title bar
 local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(0, 457, 0, 25)
 TitleBar.Position = UDim2.new(0, 0, -0.107, 0)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Darkest gray
 TitleBar.Parent = Frame
 
--- Create buttons
-local function createButton(parent, position)
+-- Create buttons function
+local function createButton(parent, position, text)
     local button = Instance.new("TextButton")
     button.Size = UDim2.new(0, 88, 0, 29)
     button.Position = position
-    button.Text = "Button"
+    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70) -- Button gray
+    button.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+    button.Text = text
     button.Parent = parent
 end
 
-createButton(Frame, UDim2.new(0.067, 0, 0.111, 0))
-createButton(Frame, UDim2.new(0.067, 0, 0.270, 0))
-createButton(Frame, UDim2.new(0.067, 0, 0.437, 0))
-createButton(Frame, UDim2.new(0.067, 0, 0.596, 0))
+-- Add buttons with labels
+createButton(Frame, UDim2.new(0.067, 0, 0.111, 0), "Option 1")
+createButton(Frame, UDim2.new(0.067, 0, 0.270, 0), "Option 2")
+createButton(Frame, UDim2.new(0.067, 0, 0.437, 0), "Option 3")
+createButton(Frame, UDim2.new(0.067, 0, 0.596, 0), "Option 4")
 
-createButton(Frame, UDim2.new(0.389, 0, 0.115, 0))
-createButton(Frame, UDim2.new(0.389, 0, 0.270, 0))
-createButton(Frame, UDim2.new(0.389, 0, 0.437, 0))
-createButton(Frame, UDim2.new(0.389, 0, 0.600, 0))
+createButton(Frame, UDim2.new(0.389, 0, 0.115, 0), "Action 1")
+createButton(Frame, UDim2.new(0.389, 0, 0.270, 0), "Action 2")
+createButton(Frame, UDim2.new(0.389, 0, 0.437, 0), "Action 3")
+createButton(Frame, UDim2.new(0.389, 0, 0.600, 0), "Action 4")
 
-createButton(Frame, UDim2.new(0.610, 0, 0.115, 0))
-createButton(Frame, UDim2.new(0.610, 0, 0.274, 0))
-createButton(Frame, UDim2.new(0.610, 0, 0.442, 0))
-createButton(Frame, UDim2.new(0.610, 0, 0.596, 0))
+createButton(Frame, UDim2.new(0.610, 0, 0.115, 0), "Mode 1")
+createButton(Frame, UDim2.new(0.610, 0, 0.274, 0), "Mode 2")
+createButton(Frame, UDim2.new(0.610, 0, 0.442, 0), "Mode 3")
+createButton(Frame, UDim2.new(0.610, 0, 0.596, 0), "Mode 4")
 
 -- Create text label
 local TextLabel = Instance.new("TextLabel")
 TextLabel.Size = UDim2.new(0, 109, 0, 25)
 TextLabel.Position = UDim2.new(0, 0, -0.107, 0)
+TextLabel.BackgroundColor3 = Color3.fromRGB(80, 80, 80) -- Label background
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
 TextLabel.Text = "Title"
 TextLabel.Parent = Frame
 
@@ -64,4 +73,5 @@ TextLabel.Parent = Frame
 local ScrollingFrame = Instance.new("ScrollingFrame")
 ScrollingFrame.Size = UDim2.new(0, 129, 0, 202)
 ScrollingFrame.Position = UDim2.new(0.022, 0, 0.044, 0)
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(90, 90, 90) -- Scrolling panel background
 ScrollingFrame.Parent = Frame
