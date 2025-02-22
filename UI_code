@@ -26,7 +26,7 @@ addRoundedCorners(Frame, 2)
 local SidePanel = Instance.new("Frame")
 SidePanel.Size = UDim2.new(0, 130, 0, 202)
 SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
-SidePanel.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- Slightly lighter gray
+SidePanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90) -- Slightly lighter gray
 SidePanel.Parent = Frame
 addRoundedCorners(SidePanel, 10)
 
@@ -34,7 +34,7 @@ addRoundedCorners(SidePanel, 10)
 local MainPanel = Instance.new("Frame")
 MainPanel.Size = UDim2.new(0, 274, 0, 202)
 MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
-MainPanel.BackgroundColor3 = Color3.fromRGB(60, 60, 60) -- Even lighter gray
+MainPanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90) -- Even lighter gray
 MainPanel.Parent = Frame
 addRoundedCorners(MainPanel, 3)
 
