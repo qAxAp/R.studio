@@ -1,34 +1,34 @@
 local Freecam = Instance.new("ScreenGui")
 Freecam.Parent = PlayerGui
 
-         local FreecamScript = Instance.new("LocalScript")
-        FreecamScript.Parent = Freecam
+local FreecamScript = Instance.new("LocalScript")
+FreecamScript.Parent = Freecam
 
-             local LocalScript = Instance.new("LocalScript")
-            LocalScript.Parent = PlayerGui
+local LocalScript = Instance.new("LocalScript")
+LocalScript.Parent = PlayerGui
 
-        local ScreenGui = Instance.new("ScreenGui")
-        ScreenGui.Parent = PlayerGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = PlayerGui
 
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 457, 0, 233)
 Frame.Position = UDim2.new(0.277093589, 0, 0.220183492, 0)
 Frame.Parent = ScreenGui
 
-            local InnerFrame1 = Instance.new("Frame")
-             InnerFrame1.Size = UDim2.new(0, 130, 0, 202)
-              InnerFrame1.Position = UDim2.new(0.0225225221, 0, 0.0442477874, 0)
-               InnerFrame1.Parent = Frame
+local InnerFrame1 = Instance.new("Frame")
+InnerFrame1.Size = UDim2.new(0, 130, 0, 202)
+InnerFrame1.Position = UDim2.new(0.0225225221, 0, 0.0442477874, 0)
+InnerFrame1.Parent = Frame
 
-  local InnerFrame2 = Instance.new("Frame")
-   InnerFrame2.Size = UDim2.new(0, 274, 0, 202)
-    InnerFrame2.Position = UDim2.new(0.358108103, 0, 0.0442477874, 0)
-     InnerFrame2.Parent = Frame
+local InnerFrame2 = Instance.new("Frame")
+InnerFrame2.Size = UDim2.new(0, 274, 0, 202)
+InnerFrame2.Position = UDim2.new(0.358108103, 0, 0.0442477874, 0)
+InnerFrame2.Parent = Frame
 
-      local HeaderFrame = Instance.new("Frame")
-     HeaderFrame.Size = UDim2.new(0, 457, 0, 25)
-    HeaderFrame.Position = UDim2.new(-3.33890355e-08, 0, -0.107296139, 0)
-   HeaderFrame.Parent = Frame
+local HeaderFrame = Instance.new("Frame")
+HeaderFrame.Size = UDim2.new(0, 457, 0, 25)
+HeaderFrame.Position = UDim2.new(-3.33890355e-08, 0, -0.107296139, 0)
+HeaderFrame.Parent = Frame
 
 local function createButton(size, position, parent)
     local button = Instance.new("TextButton")
@@ -38,25 +38,25 @@ local function createButton(size, position, parent)
     return button
 end
 
-   createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.111587986, 0), Frame)
+createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.111587986, 0), Frame)
 createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.270386279, 0), Frame)
-   createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.437768251, 0), Frame)
+createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.437768251, 0), Frame)
 createButton(UDim2.new(0, 88, 0, 29), UDim2.new(0.0678336993, 0, 0.596566498, 0), Frame)
-   createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.115879826, 0), Frame)
+createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.115879826, 0), Frame)
 createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.270386279, 0), Frame)
-   createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.437768251, 0), Frame)
+createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.437768251, 0), Frame)
 createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.389496714, 0, 0.60085839, 0), Frame)
-   createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.115879826, 0), Frame)
+createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.115879826, 0), Frame)
 createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.274678111, 0), Frame)
-   createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.442060083, 0), Frame)
+createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.442060083, 0), Frame)
 createButton(UDim2.new(0, 76, 0, 28), UDim2.new(0.610503256, 0, 0.596566498, 0), Frame)
 
 local TextLabel = Instance.new("TextLabel")
-   TextLabel.Size = UDim2.new(0, 109, 0, 25)
-     TextLabel.Position = UDim2.new(0, 0, -0.107296139, 0)
-       TextLabel.Parent = Frame
+TextLabel.Size = UDim2.new(0, 109, 0, 25)
+TextLabel.Position = UDim2.new(0, 0, -0.107296139, 0)
+TextLabel.Parent = Frame
 
-       local ScrollingFrame = Instance.new("ScrollingFrame")
-     ScrollingFrame.Size = UDim2.new(0, 129, 0, 202)
-   ScrollingFrame.Position = UDim2.new(0.0225225072, 0, 0.0442478694, 0)
- ScrollingFrame.Parent = Frame
+local ScrollingFrame = Instance.new("ScrollingFrame")
+ScrollingFrame.Size = UDim2.new(0, 129, 0, 202)
+ScrollingFrame.Position = UDim2.new(0.0225225072, 0, 0.0442478694, 0)
+ScrollingFrame.Parent = Frame
