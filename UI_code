@@ -129,7 +129,7 @@ end
 -- Define scripts for different tabs
 local tabScripts = {
     {
-        { "Dio fly", "loadstring(game:HttpGet('https://raw.githubusercontent.com/qAxAp/DioFly/main/DioFly.lua'))()" },
+        { "Dio fly", "loadstring(game:HttpGet("https://raw.githubusercontent.com/HarkkiRblx/Chatbypasser/refs/heads/main/Chatbypass"))()" },
         { "Execute 2", "print('Script 2 Executed')" },
         { "Execute 3", "print('Script 3 Executed')" },
         { "Execute 4", "print('Script 4 Executed')" }
