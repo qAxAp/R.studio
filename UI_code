@@ -33,7 +33,6 @@ addRoundedCorners(TitleBar, 2)
 local CloseButton = Instance.new("ImageButton") -- Change from TextButton to ImageButton
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
 CloseButton.Position = UDim2.new(1, -25, 0, 2)
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
 CloseButton.Image = "rbxassetid://3224922527" 
 CloseButton.Parent = TitleBar
 addRoundedCorners(CloseButton, 2)
