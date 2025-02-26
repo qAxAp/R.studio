@@ -30,20 +30,18 @@ TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 TitleBar.Parent = Frame
 addRoundedCorners(TitleBar, 2)
 
--- Create Close Button
-local CloseButton = Instance.new("TextButton")
+local CloseButton = Instance.new("ImageButton") -- Change from TextButton to ImageButton
 CloseButton.Size = UDim2.new(0, 20, 0, 20)
 CloseButton.Position = UDim2.new(1, -25, 0, 2)
 CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
-CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.Text = "X"
-CloseButton.TextSize = 15
+CloseButton.Image = "rbxassetid://3224922527" 
 CloseButton.Parent = TitleBar
-addRoundedCorners(CloseButton, 5)
+addRoundedCorners(CloseButton, 2)
 
 CloseButton.MouseButton1Click:Connect(function()
     Freecam:Destroy()
 end)
+
 
 -- Dragging functionality
 local UIS = game:GetService("UserInputService")
