@@ -75,11 +75,11 @@ end)
 
 -- Create side panel
 local SidePanel = Instance.new("Frame")
-SidePanel.Size = UDim2.new(0, 130, 0, 202)
+SidePanel.Size = UDim2.new(0, 130, 0, 230)
 SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
 SidePanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
 SidePanel.Parent = Frame
-addRoundedCorners(SidePanel, 10)
+addRoundedCorners(SidePanel, 7)
 
 -- Create main panel
 local MainPanel = Instance.new("Frame")
