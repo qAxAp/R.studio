@@ -13,7 +13,7 @@ local function addRoundedCorners(instance, radius)
     UICorner.Parent = instance
 end
 
--- Create primary frame (The Main UI)
+-- Create primary frame, The Main UI
 local Frame = Instance.new("Frame")
 Frame.Size = UDim2.new(0, 457, 0, 233)
 Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
