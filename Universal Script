@@ -170,7 +170,7 @@ end
 -- Function to create tab buttons
 local function createTabButton(name, position, tabIndex)
     local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 90, 0, 15)
+    button.Size = UDim2.new(0, 90, 0, 30)
     button.Position = UDim2.new(0, 15, 0, position)
     button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
