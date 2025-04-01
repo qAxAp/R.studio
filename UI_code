@@ -1,13 +1,12 @@
--- Detect the local player
 local player = game:GetService("Players").LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
 
--- Create main UI container
+-- UI container
 local Freecam = Instance.new("ScreenGui")
 Freecam.Parent = PlayerGui
 Freecam.ResetOnSpawn = false
 
--- Function to add rounded corners
+-- The UIcorner functions, the radius of the 
 local function addRoundedCorners(instance, radius)
     local UICorner = Instance.new("UICorner")
     UICorner.CornerRadius = UDim.new(0, radius)
