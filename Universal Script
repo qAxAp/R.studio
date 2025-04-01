@@ -1,55 +1,142 @@
-local player = game:GetService("Players").LocalPlayer
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 local PlayerGui = player:WaitForChild("PlayerGui")
-
 
 local Freecam = Instance.new("ScreenGui")
 Freecam.Parent = PlayerGui
 Freecam.ResetOnSpawn = false
 
--- The UIcorner functions, sharpness of the corner.
+-- Function to add rounded corners
 local function addRoundedCorners(instance, radius)
     local UICorner = Instance.new("UICorner")
     UICorner.CornerRadius = UDim.new(0, radius)
     UICorner.Parent = instance
 end
 
--- Create primary frame, The Main UI
+-- Main UI Frame
 local Frame = Instance.new("Frame")
-Frame.Size = UDim2.new(0, 457, 0, 233)
-Frame.Position = UDim2.new(0.277, 0, 0.220, 0)
+Frame.Size = UDim2.new(0, 500, 0, 300)
+Frame.Position = UDim2.new(0.25, 0, 0.2, 0)
 Frame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 Frame.Parent = Freecam
-addRoundedCorners(Frame, 2)
+addRoundedCorners(Frame, 5)
 
--- Title Bar, the top bar.
+-- Title Bar
 local TitleBar = Instance.new("Frame")
-TitleBar.Size = UDim2.new(1, 0, 0, 25)
-TitleBar.Position = UDim2.new(0, 0, 0, -25)
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
 TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 TitleBar.Parent = Frame
-addRoundedCorners(TitleBar, 2)
+addRoundedCorners(TitleBar, 5)
 
--- the button that deletes the script
-local CloseButton = Instance.new("ImageButton") 
-CloseButton.Size = UDim2.new(0, 20, 0, 20)
-CloseButton.Position = UDim2.new(1, -25, 0, 2)
-CloseButton.text = "" 
-CloseButton.BackgroundTransparency = 1  
+-- Close Button
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -35, 0, 0)
+CloseButton.Text = "X"
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 CloseButton.Parent = TitleBar
-addRoundedCorners(CloseButton, 2)
+addRoundedCorners(CloseButton, 5)
 
--- The function to delete the script
 CloseButton.MouseButton1Click:Connect(function()
     Freecam:Destroy()
 end)
 
+-- Side Panel (Tabs)
+local SidePanel = Instance.new("Frame")
+SidePanel.Size = UDim2.new(0, 150, 0, 270)
+SidePanel.Position = UDim2.new(0, 10, 0, 35)
+SidePanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+SidePanel.Parent = Frame
+addRoundedCorners(SidePanel, 10)
 
--- Dragging function
+-- Main Panel (Scripts Display)
+local MainPanel = Instance.new("Frame")
+MainPanel.Size = UDim2.new(0, 320, 0, 270)
+MainPanel.Position = UDim2.new(0, 170, 0, 35)
+MainPanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+MainPanel.Parent = Frame
+addRoundedCorners(MainPanel, 5)
+
+-- Search Box
+local SearchBox = Instance.new("TextBox")
+SearchBox.Size = UDim2.new(0, 140, 0, 30)
+SearchBox.Position = UDim2.new(0, 5, 0, 5)
+SearchBox.PlaceholderText = "Search ScriptBlox..."
+SearchBox.Parent = SidePanel
+
+local SearchButton = Instance.new("TextButton")
+SearchButton.Size = UDim2.new(0, 140, 0, 30)
+SearchButton.Position = UDim2.new(0, 5, 0, 40)
+SearchButton.Text = "Search"
+SearchButton.Parent = SidePanel
+addRoundedCorners(SearchButton, 5)
+
+-- Function to execute scripts
+local function executeScript(scriptCode)
+    local success, result = pcall(loadstring(scriptCode))
+    if not success then
+        warn("Error executing script:", result)
+    end
+end
+
+-- Function to display scripts
+local function displayScripts(scripts)
+    for _, child in pairs(MainPanel:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
+
+    for i, scriptData in ipairs(scripts) do
+        local scriptButton = Instance.new("TextButton")
+        scriptButton.Size = UDim2.new(0, 280, 0, 30)
+        scriptButton.Position = UDim2.new(0, 10, 0, (i - 1) * 35)
+        scriptButton.Text = scriptData.title
+        scriptButton.Parent = MainPanel
+        addRoundedCorners(scriptButton, 5)
+
+        scriptButton.MouseButton1Click:Connect(function()
+            executeScript(scriptData.script)
+        end)
+    end
+end
+
+-- Function to search for scripts using ScriptBlox API
+local function searchScripts(query)
+    local url = "https://scriptblox.com/api/script/search?q=" .. HttpService:UrlEncode(query)
+    local success, response = pcall(function()
+        return HttpService:GetAsync(url)
+    end)
+
+    if success then
+        local data = HttpService:JSONDecode(response)
+        if data and data.results then
+            local scripts = {}
+            for _, result in ipairs(data.results) do
+                table.insert(scripts, { title = result.name, script = result.script })
+            end
+            displayScripts(scripts)
+        end
+    else
+        warn("Failed to fetch scripts from ScriptBlox")
+    end
+end
+
+-- Search Button Functionality
+SearchButton.MouseButton1Click:Connect(function()
+    local query = SearchBox.Text
+    if query and query ~= "" then
+        searchScripts(query)
+    end
+end)
+
+-- Dragging function for UI
 local UIS = game:GetService("UserInputService")
 local dragging, dragStart, startPos
 
 TitleBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = true
         dragStart = input.Position
         startPos = Frame.Position
@@ -57,136 +144,14 @@ TitleBar.InputBegan:Connect(function(input)
 end)
 
 TitleBar.InputChanged:Connect(function(input)
-    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
         local delta = input.Position - dragStart
         Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
 TitleBar.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragging = false
     end
 end)
-
--- side panel
-local SidePanel = Instance.new("Frame")
-SidePanel.Size = UDim2.new(0, 130, 0, 202)
-SidePanel.Position = UDim2.new(0.022, 0, 0.044, 0)
-SidePanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-SidePanel.Parent = Frame
-addRoundedCorners(SidePanel, 10)
-
--- main panel
-local MainPanel = Instance.new("Frame")
-MainPanel.Size = UDim2.new(0, 274, 0, 202)
-MainPanel.Position = UDim2.new(0.358, 0, 0.044, 0)
-MainPanel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-MainPanel.Parent = Frame
-addRoundedCorners(MainPanel, 3)
-
--- create tab buttons
-local function createTabButton(name, position, tabIndex)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 100, 0, 30)
-    button.Position = UDim2.new(0, 15, 0, position)
-    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = name
-    button.Parent = SidePanel
-    addRoundedCorners(button, 6)
-
-    button.MouseButton1Click:Connect(function()
-        updateMainPanel(tabIndex)
-    end)
-end
-
--- buttons in MainPanel
-local function createTabButton(name, position, tabIndex)
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 85, 0, 25)
-    button.Position = UDim2.new(0, 10, 0, position) 
-    button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = name
-    button.Parent = SidePanel
-    addRoundedCorners(button, 4) 
-
-    button.MouseButton1Click:Connect(function()
-        local success, result = pcall(function()
-            return loadstring(scriptCode)
-        end)
-
-        if success and result then
-            pcall(result)
-        else
-            warn("Error executing script:", result)
-        end
-    end)
-end
-
--- Define scripts for different tabs
-local tabScripts = {
-    {
-        { "Dio fly", "loadstring(game:HttpGet('https://raw.githubusercontent.com/qAxAp/DioFly/main/DioFly.lua'))()" },
-        { "Execute 2", "print('Script 2 Executed')" },
-        { "Execute 3", "print('Script 3 Executed')" },
-        { "Execute 4", "print('Script 4 Executed')" }
-    },
-    {
-        { "Run 1", "print('Tab 2 Script 1')" },
-        { "Run 2", "print('Tab 2 Script 2')" },
-        { "Run 3", "print('Tab 2 Script 3')" },
-        { "Run 4", "print('Tab 2 Script 4')" }
-    },
-    {
-        { "Launch 1", "print('Tab 3 Script 1')" },
-        { "Launch 2", "print('Tab 3 Script 2')" },
-        { "Launch 3", "print('Tab 3 Script 3')" },
-        { "Launch 4", "print('Tab 3 Script 4')" }
-    },
-    {
-        { "Activate 1", "print('Tab 4 Script 1')" },
-        { "Activate 2", "print('Tab 4 Script 2')" },
-        { "Activate 3", "print('Tab 4 Script 3')" },
-        { "Activate 4", "print('Tab 4 Script 4')" }
-    },
-    {
-        { "Trigger 1", "print('Tab 5 Script 1')" },
-        { "Trigger 2", "print('Tab 5 Script 2')" },
-        { "Trigger 3", "print('Tab 5 Script 3')" },
-        { "Trigger 4", "print('Tab 5 Script 4')" }
-    },
-    {
-        { "Fire 1", "print('Tab 6 Script 1')" },
-        { "Fire 2", "print('Tab 6 Script 2')" },
-        { "Fire 3", "print('Tab 6 Script 3')" },
-        { "Fire 4", "print('Tab 6 Script 4')" }
-    }
-}
-
--- Function to update the buttons in the MainPanel, basically where the executable buttons.
-function updateMainPanel(tabIndex)
-    for _, child in pairs(MainPanel:GetChildren()) do
-        if child:IsA("TextButton") then
-            child:Destroy()
-        end
-    end
-
-    local buttonPositions = {
-        UDim2.new(0.067, 0, 0.111, 0),
-        UDim2.new(0.067, 0, 0.270, 0),
-        UDim2.new(0.067, 0, 0.437, 0),
-        UDim2.new(0.067, 0, 0.596, 0)
-    }
-
-    for i, data in ipairs(tabScripts[tabIndex]) do
-        createMainButton(MainPanel, buttonPositions[i], data[1], data[2])
-    end
-end
-
-for i = 1, 6 do
-    createTabButton("Tab " .. i, (i - 1) * 30, i) -- spacing in the tab buttons.
-end
-
-updateMainPanel(1)
