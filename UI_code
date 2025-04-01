@@ -100,15 +100,15 @@ local function createTabButton(name, position, tabIndex)
 end
 
 -- Function to create buttons in MainPanel
-local function createMainButton(parent, position, text, scriptCode)
+local function createTabButton(name, position, tabIndex)
     local button = Instance.new("TextButton")
-    button.Size = UDim2.new(0, 88, 0, 29)
-    button.Position = position
+    button.Size = UDim2.new(0, 85, 0, 25) -- Reduced size
+    button.Position = UDim2.new(0, 10, 0, position) -- Adjusted position slightly
     button.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = text
-    button.Parent = parent
-    addRoundedCorners(button, 6)
+    button.Text = name
+    button.Parent = SidePanel
+    addRoundedCorners(button, 4) -- Adjusted corner radius
 
     button.MouseButton1Click:Connect(function()
         local success, result = pcall(function()
@@ -184,7 +184,7 @@ function updateMainPanel(tabIndex)
 end
 
 for i = 1, 6 do
-    createTabButton("Tab " .. i, (i - 1) * 35, i)
+    createTabButton("Tab " .. i, (i - 1) * 30, i) -- Adjusted spacing
 end
 
 updateMainPanel(1)
