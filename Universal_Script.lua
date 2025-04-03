@@ -5,10 +5,6 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 screenGui.ResetOnSpawn = false
 
--- Reference dimensions matching our builder
-local refWidth = 800
-local refHeight = 450
-
 local frame1 = Instance.new("Frame")
 frame1.Name = "frame1"
 frame1.AnchorPoint = Vector2.new(0.5, 0.5)
