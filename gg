@@ -5,25 +5,25 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
 local frame1 = Instance.new("Frame")
-frame1.Size = UDim2.new(0.3242630385487528, 0, 0.38, 0)
-frame1.Position = UDim2.new(0.3163265306122449, 0, 0.278, 0)
-frame1.BackgroundColor3 = Color3.new(0.161, 0.161, 0.161)
+frame1.Size = UDim2.new(0.42970521541950113, 0, 0.538, 0)
+frame1.Position = UDim2.new(0.26077097505668934, 0, 0.186, 0)
+frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
 frame1.Parent = screenGui
 
 local frame2 = Instance.new("Frame")
-frame2.Size = UDim2.new(0.10430839002267574, 0, 0.332, 0)
-frame2.Position = UDim2.new(0.3253968253968254, 0, 0.3, 0)
-frame2.BackgroundColor3 = Color3.new(0.553, 0.157, 0.663)
+frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
+frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
+frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.Parent = screenGui
 
 local frame3 = Instance.new("Frame")
-frame3.Size = UDim2.new(0.19160997732426305, 0, 0.336, 0)
-frame3.Position = UDim2.new(0.43537414965986393, 0, 0.3, 0)
-frame3.BackgroundColor3 = Color3.new(0.553, 0.157, 0.663)
+frame3.Size = UDim2.new(0.42970521541950113, 0, 0.068, 0)
+frame3.Position = UDim2.new(0.26077097505668934, 0, 0.124, 0)
+frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.Parent = screenGui
 
 local frame4 = Instance.new("Frame")
-frame4.Size = UDim2.new(0.3253968253968254, 0, 0.068, 0)
-frame4.Position = UDim2.new(0.31519274376417233, 0, 0.22, 0)
-frame4.BackgroundColor3 = Color3.new(0.553, 0.157, 0.663)
+frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
+frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
+frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.Parent = screenGui
