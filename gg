@@ -4,6 +4,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
+-- Store the original relative positions first
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
@@ -13,27 +14,32 @@ frame1.Parent = screenGui
 
 local frame2 = Instance.new("Frame")
 frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
-frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
+local frame2RelativePos = UDim2.new(0.41609977324263037 - 0.26077097505668934, 0, 0.214 - 0.178, 0)
+frame2.Position = frame2RelativePos
 frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
-frame2.Parent = screenGui
+frame2.Parent = frame1
 
 local frame3 = Instance.new("Frame")
-frame3.Size = UDim2.new(0.42970521541950113, 0, 0.068, 0)
-frame3.Position = UDim2.new(0.26077097505668934, 0, 0.132, 0)
+frame3.Size = UDim2.new(1, 0, 0.068/0.548, 0)
+local frame3RelativePos = UDim2.new(0, 0, -0.046/0.548, 0)
+frame3.Position = frame3RelativePos
 frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.BorderSizePixel = 0
-frame3.Parent = screenGui
+frame3.Parent = frame1
 
 local frame4 = Instance.new("Frame")
-frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
-frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
+frame4.Size = UDim2.new(0.1383219954648526/0.42970521541950113, 0, 0.484/0.548, 0)
+local frame4RelativePos = UDim2.new(
+    (0.2698412698412698 - 0.26077097505668934)/0.42970521541950113, 0,
+    (0.214 - 0.178)/0.548, 0
+)
+frame4.Position = frame4RelativePos
 frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
-frame4.Parent = screenGui
+frame4.Parent = frame1
 
-      --[UI corner section]--
-
+--[UI corner section]--
 local corner1 = Instance.new("UICorner")
 corner1.CornerRadius = UDim.new(0, 6) 
 corner1.Parent = frame1
@@ -50,9 +56,10 @@ local corner4 = Instance.new("UICorner")
 corner4.CornerRadius = UDim.new(0, 2) 
 corner4.Parent = frame4
 
+-- Control buttons
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 15, 0, 15)
-closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
+closeButton.Position = UDim2.new(1, -20, 0.5, -7.5)
 closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
 closeButton.Text = ""
 closeButton.Parent = frame3
@@ -63,7 +70,7 @@ closeCorner.Parent = closeButton
 
 local minimizeButton = Instance.new("TextButton")
 minimizeButton.Size = UDim2.new(0, 15, 0, 15)
-minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
+minimizeButton.Position = UDim2.new(1, -40, 0.5, -7.5)
 minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0)
 minimizeButton.Text = ""
 minimizeButton.Parent = frame3
@@ -72,20 +79,20 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
--- Improved dragging for both PC and mobile
+-- Dragging functionality
 local dragInput
 local dragStart
 local startPos
 
 local function updatePosition(input)
-    local delta
     if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        delta = input.Position - dragStart
-        local newPosition = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-        frame1.Position = newPosition
-        frame2.Position = UDim2.new(newPosition.X.Scale + 0.155, frame2.Position.X.Offset, newPosition.Y.Scale + 0.082, frame2.Position.Y.Offset)
-        frame3.Position = UDim2.new(newPosition.X.Scale, frame3.Position.X.Offset, newPosition.Y.Scale - 0.046, frame3.Position.Y.Offset)
-        frame4.Position = UDim2.new(newPosition.X.Scale - 0.009, frame4.Position.X.Offset, newPosition.Y.Scale + 0.082, frame4.Position.Y.Offset)
+        local delta = input.Position - dragStart
+        frame1.Position = UDim2.new(
+            startPos.X.Scale, 
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale, 
+            startPos.Y.Offset + delta.Y
+        )
     end
 end
 
@@ -116,6 +123,7 @@ game:GetService("UserInputService").InputChanged:Connect(function(input)
     end
 end)
 
+-- Window controls
 local isMinimized = false
 
 closeButton.MouseButton1Click:Connect(function()
@@ -123,14 +131,8 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 minimizeButton.MouseButton1Click:Connect(function()
-    if isMinimized then
-        frame1.Visible = true
-        frame2.Visible = true
-        frame4.Visible = true
-    else
-        frame1.Visible = false
-        frame2.Visible = false
-        frame4.Visible = false
-    end
     isMinimized = not isMinimized
+    frame2.Visible = not isMinimized
+    frame4.Visible = not isMinimized
+    frame1.Size = isMinimized and UDim2.new(frame1.Size.X.Scale, 0, 0.068, 0) or UDim2.new(0.42970521541950113, 0, 0.548, 0)
 end)
