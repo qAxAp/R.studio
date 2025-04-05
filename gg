@@ -4,28 +4,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
-      --[UI corner section]--
-
-local corner1 = Instance.new("UICorner")
-corner1.CornerRadius = UDim.new(0, 6) 
-corner1.Parent = frame1
-
-local corner2 = Instance.new("UICorner")
-corner2.CornerRadius = UDim.new(0, 6) 
-corner2.Parent = frame2
-
-local corner3 = Instance.new("UICorner")
-corner3.CornerRadius = UDim.new(0, 6) 
-corner3.Parent = frame3
-
-local corner4 = Instance.new("UICorner")
-corner4.CornerRadius = UDim.new(0, 2) 
-corner4.Parent = frame4
-
-
-
-        --[ The main frames ]--
-
+--[ The main frames ]--
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
@@ -47,10 +26,82 @@ frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.BorderSizePixel = 0
 frame3.Parent = screenGui
 
-
 local frame4 = Instance.new("Frame")
 frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
 frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
 frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
+
+--[UI corner section]--
+local corner1 = Instance.new("UICorner")
+corner1.CornerRadius = UDim.new(0, 6) 
+corner1.Parent = frame1
+
+local corner2 = Instance.new("UICorner")
+corner2.CornerRadius = UDim.new(0, 6) 
+corner2.Parent = frame2
+
+local corner3 = Instance.new("UICorner")
+corner3.CornerRadius = UDim.new(0, 6) 
+corner3.Parent = frame3
+
+local corner4 = Instance.new("UICorner")
+corner4.CornerRadius = UDim.new(0, 2) 
+corner4.Parent = frame4
+
+-- Create top bar control buttons
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 15, 0, 15)
+closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
+closeButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Red
+closeButton.Text = ""
+closeButton.Parent = frame3
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(1, 0) -- Makes it a perfect circle
+closeCorner.Parent = closeButton
+
+local minimizeButton = Instance.new("TextButton")
+minimizeButton.Size = UDim2.new(0, 15, 0, 15)
+minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
+minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0) -- Yellow
+minimizeButton.Text = ""
+minimizeButton.Parent = frame3
+
+local minimizeCorner = Instance.new("UICorner")
+minimizeCorner.CornerRadius = UDim.new(1, 0) -- Makes it a perfect circle
+minimizeCorner.Parent = minimizeButton
+
+-- Store original positions and sizes
+local originalPositions = {
+    frame1 = frame1.Position,
+    frame2 = frame2.Position,
+    frame4 = frame4.Position
+}
+
+local isMinimized = false
+
+-- Close button functionality
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy()
+end)
+
+-- Minimize button functionality
+minimizeButton.MouseButton1Click:Connect(function()
+    if isMinimized then
+        -- Restore UI
+        frame1.Position = originalPositions.frame1
+        frame2.Position = originalPositions.frame2
+        frame4.Position = originalPositions.frame4
+        frame1.Visible = true
+        frame2.Visible = true
+        frame4.Visible = true
+    else
+        -- Minimize UI (just show the top bar)
+        frame1.Visible = false
+        frame2.Visible = false
+        frame4.Visible = false
+    end
+    isMinimized = not isMinimized
+end)
