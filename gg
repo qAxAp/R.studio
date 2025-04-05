@@ -4,7 +4,6 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
---[ The main frames ]--
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
@@ -33,7 +32,8 @@ frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
 
---[UI corner section]--
+      --[UI corner section]--
+
 local corner1 = Instance.new("UICorner")
 corner1.CornerRadius = UDim.new(0, 6) 
 corner1.Parent = frame1
@@ -50,55 +50,71 @@ local corner4 = Instance.new("UICorner")
 corner4.CornerRadius = UDim.new(0, 2) 
 corner4.Parent = frame4
 
--- Create top bar control buttons
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 15, 0, 15)
 closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
-closeButton.BackgroundColor3 = Color3.new(1, 0, 0) -- Red
+closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
 closeButton.Text = ""
 closeButton.Parent = frame3
 
 local closeCorner = Instance.new("UICorner")
-closeCorner.CornerRadius = UDim.new(1, 0) -- Makes it a perfect circle
+closeCorner.CornerRadius = UDim.new(1, 0)
 closeCorner.Parent = closeButton
 
 local minimizeButton = Instance.new("TextButton")
 minimizeButton.Size = UDim2.new(0, 15, 0, 15)
 minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
-minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0) -- Yellow
+minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0)
 minimizeButton.Text = ""
 minimizeButton.Parent = frame3
 
 local minimizeCorner = Instance.new("UICorner")
-minimizeCorner.CornerRadius = UDim.new(1, 0) -- Makes it a perfect circle
+minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
--- Store original positions and sizes
-local originalPositions = {
-    frame1 = frame1.Position,
-    frame2 = frame2.Position,
-    frame4 = frame4.Position
-}
+local dragInput
+local dragStart
+local startPos
+
+local function updatePosition(input)
+    local delta = input.Position - dragStart
+    local newPosition = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    frame1.Position = newPosition
+    frame2.Position = UDim2.new(newPosition.X.Scale + 0.155, frame2.Position.X.Offset, newPosition.Y.Scale + 0.082, frame2.Position.Y.Offset)
+    frame3.Position = UDim2.new(newPosition.X.Scale, frame3.Position.X.Offset, newPosition.Y.Scale - 0.046, frame3.Position.Y.Offset)
+    frame4.Position = UDim2.new(newPosition.X.Scale - 0.009, frame4.Position.X.Offset, newPosition.Y.Scale + 0.082, frame4.Position.Y.Offset)
+end
+
+frame3.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragStart = input.Position
+        startPos = frame1.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragStart = nil
+            end
+        end)
+    end
+end)
+
+frame3.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragStart then
+        updatePosition(input)
+    end
+end)
 
 local isMinimized = false
 
--- Close button functionality
 closeButton.MouseButton1Click:Connect(function()
     screenGui:Destroy()
 end)
 
--- Minimize button functionality
 minimizeButton.MouseButton1Click:Connect(function()
     if isMinimized then
-        -- Restore UI
-        frame1.Position = originalPositions.frame1
-        frame2.Position = originalPositions.frame2
-        frame4.Position = originalPositions.frame4
         frame1.Visible = true
         frame2.Visible = true
         frame4.Visible = true
     else
-        -- Minimize UI (just show the top bar)
         frame1.Visible = false
         frame2.Visible = false
         frame4.Visible = false
