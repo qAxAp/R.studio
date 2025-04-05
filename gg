@@ -72,25 +72,32 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
+-- Improved dragging for both PC and mobile
 local dragInput
 local dragStart
 local startPos
 
 local function updatePosition(input)
-    local delta = input.Position - dragStart
-    local newPosition = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    frame1.Position = newPosition
-    frame2.Position = UDim2.new(newPosition.X.Scale + 0.155, frame2.Position.X.Offset, newPosition.Y.Scale + 0.082, frame2.Position.Y.Offset)
-    frame3.Position = UDim2.new(newPosition.X.Scale, frame3.Position.X.Offset, newPosition.Y.Scale - 0.046, frame3.Position.Y.Offset)
-    frame4.Position = UDim2.new(newPosition.X.Scale - 0.009, frame4.Position.X.Offset, newPosition.Y.Scale + 0.082, frame4.Position.Y.Offset)
+    local delta
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        delta = input.Position - dragStart
+        local newPosition = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        frame1.Position = newPosition
+        frame2.Position = UDim2.new(newPosition.X.Scale + 0.155, frame2.Position.X.Offset, newPosition.Y.Scale + 0.082, frame2.Position.Y.Offset)
+        frame3.Position = UDim2.new(newPosition.X.Scale, frame3.Position.X.Offset, newPosition.Y.Scale - 0.046, frame3.Position.Y.Offset)
+        frame4.Position = UDim2.new(newPosition.X.Scale - 0.009, frame4.Position.X.Offset, newPosition.Y.Scale + 0.082, frame4.Position.Y.Offset)
+    end
 end
 
 frame3.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragStart = input.Position
         startPos = frame1.Position
-        input.Changed:Connect(function()
+        
+        local connection
+        connection = input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
+                connection:Disconnect()
                 dragStart = nil
             end
         end)
@@ -98,7 +105,13 @@ frame3.InputBegan:Connect(function(input)
 end)
 
 frame3.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragStart then
+    if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) and dragStart then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragStart then
         updatePosition(input)
     end
 end)
