@@ -7,7 +7,7 @@ screenGui.Parent = playerGui
 --[ The main frames ]--
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
-frame1.Position = UDim2.new(0.26, 0, 0.178, 0)
+frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
 frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
 frame1.BorderSizePixel = 0
 frame1.Parent = screenGui
@@ -15,7 +15,7 @@ frame1.Parent = screenGui
 local frame2 = Instance.new("Frame")
 frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
 frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
-frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059) -- Darker frame
+frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
 frame2.Parent = screenGui
 
@@ -72,6 +72,107 @@ minimizeButton.Parent = frame3
 local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
+
+--[ Tab System ]--
+local tabsContainer = Instance.new("Frame")
+tabsContainer.Size = UDim2.new(0.7, 0, 1, 0)
+tabsContainer.Position = UDim2.new(0.05, 0, 0, 0)
+tabsContainer.BackgroundTransparency = 1
+tabsContainer.Parent = frame3
+
+local tabsLayout = Instance.new("UIListLayout")
+tabsLayout.FillDirection = Enum.FillDirection.Horizontal
+tabsLayout.Padding = UDim.new(0, 5)
+tabsLayout.Parent = tabsContainer
+
+-- Create content frames for tabs
+local contentFrame1 = Instance.new("Frame")
+contentFrame1.Size = UDim2.new(1, 0, 1, 0)
+contentFrame1.BackgroundTransparency = 1
+contentFrame1.Visible = true
+contentFrame1.Parent = frame1
+
+local contentFrame2 = Instance.new("Frame")
+contentFrame2.Size = UDim2.new(1, 0, 1, 0)
+contentFrame2.BackgroundTransparency = 1
+contentFrame2.Visible = false
+contentFrame2.Parent = frame1
+
+local contentFrame3 = Instance.new("Frame")
+contentFrame3.Size = UDim2.new(1, 0, 1, 0)
+contentFrame3.BackgroundTransparency = 1
+contentFrame3.Visible = false
+contentFrame3.Parent = frame1
+
+-- Create tab buttons
+local tabButtons = {}
+
+local function createTabButton(name, contentFrame)
+    local tabButton = Instance.new("TextButton")
+    tabButton.Size = UDim2.new(0.2, 0, 0.8, 0)
+    tabButton.Position = UDim2.new(0, 0, 0.1, 0)
+    tabButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    tabButton.Text = name
+    tabButton.TextColor3 = Color3.new(1, 1, 1)
+    tabButton.TextSize = 14
+    tabButton.Parent = tabsContainer
+    
+    local tabCorner = Instance.new("UICorner")
+    tabCorner.CornerRadius = UDim.new(0, 4)
+    tabCorner.Parent = tabButton
+    
+    tabButton.MouseButton1Click:Connect(function()
+        -- Hide all content frames
+        contentFrame1.Visible = false
+        contentFrame2.Visible = false
+        contentFrame3.Visible = false
+        
+        -- Show the selected content frame
+        contentFrame.Visible = true
+        
+        -- Update tab button appearances
+        for _, btn in pairs(tabButtons) do
+            btn.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+        end
+        tabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+    end)
+    
+    table.insert(tabButtons, tabButton)
+    return tabButton
+end
+
+-- Create tabs
+local tab1 = createTabButton("Tab 1", contentFrame1)
+local tab2 = createTabButton("Tab 2", contentFrame2)
+local tab3 = createTabButton("Tab 3", contentFrame3)
+
+-- Set first tab as active initially
+tab1.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+
+-- Add some sample content to the tabs
+local label1 = Instance.new("TextLabel")
+label1.Text = "This is Tab 1 Content"
+label1.Size = UDim2.new(0.8, 0, 0.1, 0)
+label1.Position = UDim2.new(0.1, 0, 0.1, 0)
+label1.TextColor3 = Color3.new(1, 1, 1)
+label1.BackgroundTransparency = 1
+label1.Parent = contentFrame1
+
+local label2 = Instance.new("TextLabel")
+label2.Text = "This is Tab 2 Content"
+label2.Size = UDim2.new(0.8, 0, 0.1, 0)
+label2.Position = UDim2.new(0.1, 0, 0.1, 0)
+label2.TextColor3 = Color3.new(1, 1, 1)
+label2.BackgroundTransparency = 1
+label2.Parent = contentFrame2
+
+local label3 = Instance.new("TextLabel")
+label3.Text = "This is Tab 3 Content"
+label3.Size = UDim2.new(0.8, 0, 0.1, 0)
+label3.Position = UDim2.new(0.1, 0, 0.1, 0)
+label3.TextColor3 = Color3.new(1, 1, 1)
+label3.BackgroundTransparency = 1
+label3.Parent = contentFrame3
 
 -- Dragging functionality
 local dragInput
@@ -149,123 +250,3 @@ minimizeButton.MouseButton1Click:Connect(function()
     frame2.Visible = not isMinimized
     frame4.Visible = not isMinimized
 end)
-
--- Tab system
-local tabs = {}
-local currentTab = nil
-local tabButtons = {}
-
--- Create tab container in frame2 (the darker frame)
-local tabContainer = Instance.new("Frame")
-tabContainer.Size = UDim2.new(1, -10, 1, -10)
-tabContainer.Position = UDim2.new(0, 5, 0, 5)
-tabContainer.BackgroundTransparency = 1
-tabContainer.Parent = frame2
-
--- Create button container in frame4 (left panel)
-local buttonContainer = Instance.new("ScrollingFrame")
-buttonContainer.Size = UDim2.new(1, -10, 1, -10)
-buttonContainer.Position = UDim2.new(0, 5, 0, 5)
-buttonContainer.BackgroundTransparency = 1
-buttonContainer.ScrollBarThickness = 5
-buttonContainer.AutomaticCanvasSize = Enum.AutomaticSize.Y
-buttonContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-buttonContainer.Parent = frame4
-
-local buttonLayout = Instance.new("UIListLayout")
-buttonLayout.Padding = UDim.new(0, 5)
-buttonLayout.SortOrder = Enum.SortOrder.LayoutOrder
-buttonLayout.Parent = buttonContainer
-
--- Function to create a new tab
-function createTab(tabName)
-    local tab = Instance.new("ScrollingFrame")
-    tab.Name = tabName
-    tab.Size = UDim2.new(1, 0, 1, 0)
-    tab.BackgroundTransparency = 1
-    tab.Visible = false
-    tab.ScrollBarThickness = 5
-    tab.AutomaticCanvasSize = Enum.AutomaticSize.Y
-    tab.CanvasSize = UDim2.new(0, 0, 0, 0)
-    tab.Parent = tabContainer
-    
-    local layout = Instance.new("UIListLayout")
-    layout.Padding = UDim.new(0, 5)
-    layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.Parent = tab
-    
-    tabs[tabName] = tab
-    
-    -- Create tab button (centered more to the right)
-    local tabButton = Instance.new("TextButton")
-    tabButton.Size = UDim2.new(0.8, 0, 0, 30)
-    tabButton.Position = UDim2.new(0.50, 0, 0, 0) -- More centered to the right
-    tabButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    tabButton.Text = tabName
-    tabButton.TextColor3 = Color3.new(1, 1, 1)
-    tabButton.LayoutOrder = #tabButtons + 1
-    tabButton.Parent = buttonContainer
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 4)
-    corner.Parent = tabButton
-    
-    tabButton.MouseButton1Click:Connect(function()
-        if currentTab then
-            currentTab.Visible = false
-        end
-        currentTab = tab
-        tab.Visible = true
-    end)
-    
-    table.insert(tabButtons, tabButton)
-    
-    -- If this is the first tab, make it active
-    if not currentTab then
-        currentTab = tab
-        tab.Visible = true
-    end
-    
-    return tab
-end
-
--- Function to add a button to a tab
-function addButtonToTab(tabName, buttonName, scriptToExecute)
-    local tab = tabs[tabName]
-    if not tab then
-        tab = createTab(tabName)
-    end
-    
-    local button = Instance.new("TextButton")
-    button.Size = UDim2.new(5, 0, 0, 25) -- Shorter buttons
-    button.Position = UDim2.new(0.05, 0, 0, 0)
-    button.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    button.Text = buttonName
-    button.TextColor3 = Color3.new(1, 1, 1)
-    button.Parent = tab
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 4)
-    corner.Parent = button
-    
-    button.MouseButton1Click:Connect(function()
-        local success, errorMsg = pcall(function()
-            loadstring(scriptToExecute)()
-        end)
-        if not success then
-            warn("Error executing script: " .. errorMsg)
-        end
-    end)
-end
-
--- Example usage:
--- Create some tabs and buttons
-createTab("Main")
-createTab("Teleports")
-createTab("Tools")
-
--- Add some example buttons (shorter ones)
-addButtonToTab("Main", "Fly", "loadstring(game:HttpGet('https://example.com/fly.lua'))()")
-addButtonToTab("Main", "Speed", "game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50")
-addButtonToTab("Teleports", "Spawn", "game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 100, 0)")
-addButtonToTab("Tools", "Infinite Yield", "loadstring(game:HttpGet('https://example.com/iy.lua'))()")
