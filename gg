@@ -52,5 +52,5 @@ local frame4 = Instance.new("Frame")
 frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
 frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
 frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
-frame.BorderSizePixel = 0
+frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
