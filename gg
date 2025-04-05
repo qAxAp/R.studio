@@ -4,25 +4,34 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
-local frame1 = Instance.new("Frame")
+local function createRoundedFrame()
+    local frame = Instance.new("Frame")
+    local corner = Instance.new("UICorner")
+    corner.Parent = frame
+    corner.CornerRadius = UDim.new(0, 6) 
+    frame.BorderSizePixel = 0 
+    return frame
+end
+
+local frame1 = createRoundedFrame()
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.538, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.186, 0)
 frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
-frame1.Parent = screenGui
+frame1.Parent = screenGui 
 
-local frame2 = Instance.new("Frame")
+local frame2 = createRoundedFrame()
 frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
 frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
 frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.Parent = screenGui
 
-local frame3 = Instance.new("Frame")
+local frame3 = createRoundedFrame()
 frame3.Size = UDim2.new(0.42970521541950113, 0, 0.068, 0)
 frame3.Position = UDim2.new(0.26077097505668934, 0, 0.124, 0)
 frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.Parent = screenGui
 
-local frame4 = Instance.new("Frame")
+local frame4 = createRoundedFrame()
 frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
 frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
 frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
