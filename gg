@@ -5,12 +5,12 @@ local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
 local function createRoundedFrame()
-    local frame = Instance.new("Frame")
-    local corner = Instance.new("UICorner")
-    corner.Parent = frame
-    corner.CornerRadius = UDim.new(0, 6) 
-    frame.BorderSizePixel = 0 
-    return frame
+local frame = Instance.new("Frame")
+local corner = Instance.new("UICorner")
+corner.Parent = frame
+corner.CornerRadius = UDim.new(0, 6) 
+frame.BorderSizePixel = 0 
+return frame
 end
 
 local frame1 = createRoundedFrame()
