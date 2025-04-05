@@ -1,5 +1,5 @@
 -- Example usage matching your image:
-local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/qAxAp/R.studio/refs/heads/main/loadstring?token=GHSAT0AAAAAADBWCFHMK4BUNJDMVMQRUCHUZ7RKDHA'))()
+local Library = loadstring(game:HttpGet('https://raw.githubusercontent.com/qAxAp/R.studio/refs/heads/main/loadstring'))()
 
 local Window = Library:CreateWindow("DioHub", "V6", 10044538000)
 
