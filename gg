@@ -73,41 +73,10 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System - In frame4 (left panel) ]--
-local tabsContainer = Instance.new("Frame")
-tabsContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
-tabsContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
-tabsContainer.BackgroundTransparency = 1
-tabsContainer.Parent = frame4
-
-local tabsLayout = Instance.new("UIListLayout")
-tabsLayout.FillDirection = Enum.FillDirection.Vertical
-tabsLayout.Padding = UDim.new(0, 5)
-tabsLayout.Parent = tabsContainer
-
--- Create content frames for tabs (in frame1)
-local contentFrame1 = Instance.new("Frame")
-contentFrame1.Size = UDim2.new(1, 0, 1, 0)
-contentFrame1.BackgroundTransparency = 1
-contentFrame1.Visible = true
-contentFrame1.Parent = frame1
-
-local contentFrame2 = Instance.new("Frame")
-contentFrame2.Size = UDim2.new(1, 0, 1, 0)
-contentFrame2.BackgroundTransparency = 1
-contentFrame2.Visible = false
-contentFrame2.Parent = frame1
-
-local contentFrame3 = Instance.new("Frame")
-contentFrame3.Size = UDim2.new(1, 0, 1, 0)
-contentFrame3.BackgroundTransparency = 1
-contentFrame3.Visible = false
-contentFrame3.Parent = frame1
-
 --[ Loadstring Buttons - In frame2 (right panel) ]--
 local loadstringContainer = Instance.new("Frame")
-loadstringContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
-loadstringContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
+loadstringContainer.Size = UDim2.new(0.9, 0, 0.9, 0)
+loadstringContainer.Position = UDim2.new(0.05, 0, 0.05, 0)
 loadstringContainer.BackgroundTransparency = 1
 loadstringContainer.Parent = frame2
 
@@ -143,66 +112,8 @@ for _, buttonInfo in ipairs(loadstringButtons) do
     end)
 end
 
--- Create tab buttons in left panel (frame4)
-local tabButtons = {}
-
-local function createTabButton(name, contentFrame)
-    local tabButton = Instance.new("TextButton")
-    tabButton.Size = UDim2.new(1, 0, 0.15, 0)
-    tabButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    tabButton.Text = name
-    tabButton.TextColor3 = Color3.new(1, 1, 1)
-    tabButton.TextSize = 14
-    tabButton.Parent = tabsContainer
-    
-    local tabCorner = Instance.new("UICorner")
-    tabCorner.CornerRadius = UDim.new(0, 4)
-    tabCorner.Parent = tabButton
-    
-    tabButton.MouseButton1Click:Connect(function()
-        -- Hide all content frames
-        contentFrame1.Visible = false
-        contentFrame2.Visible = false
-        contentFrame3.Visible = false
-        
-        -- Show the selected content frame
-        contentFrame.Visible = true
-        
-        -- Update tab button appearances
-        for _, btn in pairs(tabButtons) do
-            btn.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-        end
-        tabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-    end)
-    
-    table.insert(tabButtons, tabButton)
-    return tabButton
-end
-
--- Create tabs and their content
-local tab1 = createTabButton("Main", contentFrame1)
-local tab2 = createTabButton("Info", contentFrame2)
-local tab3 = createTabButton("Credits", contentFrame3)
-
--- Add some content to the tabs
-local function addTabContent(contentFrame, text)
-    local label = Instance.new("TextLabel")
-    label.Text = text
-    label.Size = UDim2.new(0.8, 0, 0.8, 0)
-    label.Position = UDim2.new(0.1, 0, 0.1, 0)
-    label.TextColor3 = Color3.new(1, 1, 1)
-    label.BackgroundTransparency = 1
-    label.TextSize = 16
-    label.TextWrapped = true
-    label.Parent = contentFrame
-end
-
-addTabContent(contentFrame1, "Welcome to the main tab! Select scripts from the right panel.")
-addTabContent(contentFrame2, "Information about the script hub and how to use it.")
-addTabContent(contentFrame3, "Credits to the developers and script creators.")
-
--- Set first tab as active initially
-tab1.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+--[ Empty the main frame completely ]--
+frame1:ClearAllChildren()
 
 -- Dragging functionality
 local dragInput
