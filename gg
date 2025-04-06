@@ -19,14 +19,14 @@ screenGui.Parent = playerGui
 --[ The main frames - Now 25% larger ]--
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.55, 0, 0.65, 0) -- Increased size
-frame1.Position = UDim2.new(0.40, 0, 0.15, 0) -- Adjusted position
+frame1.Position = UDim2.new(0.22, 0, 0.15, 0) -- Adjusted position
 frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
 frame1.BorderSizePixel = 0
 frame1.Parent = screenGui
 
 local frame2 = Instance.new("Frame")
 frame2.Size = UDim2.new(0.35, 0, 0.55, 0) -- Increased size
-frame2.Position = UDim2.new(0.4, 0, 0.2, 0) -- Adjusted position
+frame2.Position = UDim2.new(0.48, 0, 0.2, 0) -- Adjusted position
 frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
 frame2.Parent = screenGui
