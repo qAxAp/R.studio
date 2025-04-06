@@ -73,17 +73,19 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System - In frame4 (left panel) ]--
-local tabsContainer = Instance.new("Frame")
-tabsContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
-tabsContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
-tabsContainer.BackgroundTransparency = 1
-tabsContainer.Parent = frame4
+--[ Tab System - In frame4 (left panel) with ScrollingFrame ]--
+local tabsScrollingFrame = Instance.new("ScrollingFrame")
+tabsScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
+tabsScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
+tabsScrollingFrame.BackgroundTransparency = 1
+tabsScrollingFrame.ScrollBarThickness = 5
+tabsScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+tabsScrollingFrame.Parent = frame4
 
 local tabsLayout = Instance.new("UIListLayout")
 tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
-tabsLayout.Parent = tabsContainer
+tabsLayout.Parent = tabsScrollingFrame
 
 -- Create content frames for tabs (in frame1)
 local contentFrame1 = Instance.new("Frame")
@@ -104,17 +106,19 @@ contentFrame3.BackgroundTransparency = 1
 contentFrame3.Visible = false
 contentFrame3.Parent = frame1
 
---[ Loadstring Buttons - In frame2 (right panel) ]--
-local loadstringContainer = Instance.new("Frame")
-loadstringContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
-loadstringContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
-loadstringContainer.BackgroundTransparency = 1
-loadstringContainer.Parent = frame2
+--[ Loadstring Buttons - In frame2 (right panel) with ScrollingFrame ]--
+local loadstringScrollingFrame = Instance.new("ScrollingFrame")
+loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
+loadstringScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
+loadstringScrollingFrame.BackgroundTransparency = 1
+loadstringScrollingFrame.ScrollBarThickness = 5
+loadstringScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+loadstringScrollingFrame.Parent = frame2
 
 local loadstringLayout = Instance.new("UIListLayout")
 loadstringLayout.FillDirection = Enum.FillDirection.Vertical
 loadstringLayout.Padding = UDim.new(0, 10)
-loadstringLayout.Parent = loadstringContainer
+loadstringLayout.Parent = loadstringScrollingFrame
 
 -- Function to create loadstring buttons for each tab
 local function createLoadstringButtons(container, tabName)
@@ -129,15 +133,25 @@ local function createLoadstringButtons(container, tabName)
     local buttonTemplates = {
         Main = {
             {Name = "Fly Script", Script = "loadstring(game:HttpGet('https://example.com/fly.lua'))()"},
-            {Name = "Speed Script", Script = "loadstring(game:HttpGet('https://example.com/speed.lua'))()"}
+            {Name = "Speed Script", Script = "loadstring(game:HttpGet('https://example.com/speed.lua'))()"},
+            {Name = "Invisibility", Script = "loadstring(game:HttpGet('https://example.com/invis.lua'))()"},
+            {Name = "Teleport Tool", Script = "loadstring(game:HttpGet('https://example.com/tp.lua'))()"},
+            {Name = "ESP Players", Script = "loadstring(game:HttpGet('https://example.com/esp.lua'))()"}
         },
         Tools = {
             {Name = "Noclip", Script = "loadstring(game:HttpGet('https://example.com/noclip.lua'))()"},
-            {Name = "Infinite Jump", Script = "loadstring(game:HttpGet('https://example.com/infjump.lua'))()"}
+            {Name = "Infinite Jump", Script = "loadstring(game:HttpGet('https://example.com/infjump.lua'))()"},
+            {Name = "Anti-AFK", Script = "loadstring(game:HttpGet('https://example.com/antiafk.lua'))()"},
+            {Name = "Auto Collect", Script = "loadstring(game:HttpGet('https://example.com/autocollect.lua'))()"},
+            {Name = "Click TP", Script = "loadstring(game:HttpGet('https://example.com/clicktp.lua'))()"},
+            {Name = "Reach", Script = "loadstring(game:HttpGet('https://example.com/reach.lua'))()"}
         },
         Settings = {
             {Name = "GUI Toggle", Script = "loadstring(game:HttpGet('https://example.com/gui.lua'))()"},
-            {Name = "Reset All", Script = "loadstring(game:HttpGet('https://example.com/reset.lua'))()"}
+            {Name = "Reset All", Script = "loadstring(game:HttpGet('https://example.com/reset.lua'))()"},
+            {Name = "UI Theme Dark", Script = "loadstring(game:HttpGet('https://example.com/darktheme.lua'))()"},
+            {Name = "UI Theme Light", Script = "loadstring(game:HttpGet('https://example.com/lighttheme.lua'))()"},
+            {Name = "Save Settings", Script = "loadstring(game:HttpGet('https://example.com/save.lua'))()"}
         }
     }
 
@@ -145,7 +159,7 @@ local function createLoadstringButtons(container, tabName)
     
     for _, buttonInfo in ipairs(buttons) do
         local button = Instance.new("TextButton")
-        button.Size = UDim2.new(1, 0, 0.2, 0)
+        button.Size = UDim2.new(1, -5, 0, 30) -- Accounting for scrollbar
         button.BackgroundColor3 = Color3.new(0.3, 0.2, 0.4)
         button.Text = buttonInfo.Name
         button.TextColor3 = Color3.new(1, 1, 1)
@@ -168,12 +182,12 @@ local tabButtons = {}
 
 local function createTabButton(name, contentFrame)
     local tabButton = Instance.new("TextButton")
-    tabButton.Size = UDim2.new(1, 0, 0.15, 0)
+    tabButton.Size = UDim2.new(1, -5, 0, 30) -- Accounting for scrollbar
     tabButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     tabButton.Text = name
     tabButton.TextColor3 = Color3.new(1, 1, 1)
     tabButton.TextSize = 14
-    tabButton.Parent = tabsContainer
+    tabButton.Parent = tabsScrollingFrame
     
     local tabCorner = Instance.new("UICorner")
     tabCorner.CornerRadius = UDim.new(0, 4)
@@ -195,7 +209,7 @@ local function createTabButton(name, contentFrame)
         tabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
         
         -- Update loadstring buttons for this tab
-        createLoadstringButtons(loadstringContainer, name)
+        createLoadstringButtons(loadstringScrollingFrame, name)
     end)
     
     table.insert(tabButtons, tabButton)
@@ -209,7 +223,7 @@ local tab3 = createTabButton("Settings", contentFrame3)
 
 -- Set first tab as active initially
 tab1.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-createLoadstringButtons(loadstringContainer, "Main")
+createLoadstringButtons(loadstringScrollingFrame, "Main")
 
 -- Dragging functionality
 local dragInput
