@@ -73,7 +73,7 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System - Now in frame4 ]--
+--[ Tab System - In frame4 ]--
 local tabsContainer = Instance.new("Frame")
 tabsContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
 tabsContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
@@ -103,6 +103,51 @@ contentFrame3.Size = UDim2.new(1, 0, 1, 0)
 contentFrame3.BackgroundTransparency = 1
 contentFrame3.Visible = false
 contentFrame3.Parent = frame1
+
+-- Function to create buttons in a content frame
+local function createButtonsForTab(contentFrame, tabName)
+    local buttonContainer = Instance.new("Frame")
+    buttonContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
+    buttonContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
+    buttonContainer.BackgroundTransparency = 1
+    buttonContainer.Parent = contentFrame
+    
+    local buttonLayout = Instance.new("UIListLayout")
+    buttonLayout.FillDirection = Enum.FillDirection.Vertical
+    buttonLayout.Padding = UDim.new(0, 10)
+    buttonLayout.Parent = buttonContainer
+    
+    -- Create 4 buttons for this tab
+    for i = 1, 4 do
+        local button = Instance.new("TextButton")
+        button.Size = UDim2.new(1, 0, 0.2, 0)
+        button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.4)
+        button.Text = tabName.." Button "..i
+        button.TextColor3 = Color3.new(1, 1, 1)
+        button.TextSize = 14
+        button.Parent = buttonContainer
+        
+        local buttonCorner = Instance.new("UICorner")
+        buttonCorner.CornerRadius = UDim.new(0, 4)
+        buttonCorner.Parent = button
+        
+        -- Example button functionality
+        button.MouseButton1Click:Connect(function()
+            print(tabName.." Button "..i.." clicked!")
+        end)
+    end
+    
+    -- Add a title label
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Text = tabName.." Content"
+    titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+    titleLabel.Position = UDim2.new(0, 0, 0, 0)
+    titleLabel.TextColor3 = Color3.new(1, 1, 1)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.TextSize = 18
+    titleLabel.Font = Enum.Font.SourceSansBold
+    titleLabel.Parent = contentFrame
+end
 
 -- Create tab buttons
 local tabButtons = {}
@@ -140,38 +185,18 @@ local function createTabButton(name, contentFrame)
     return tabButton
 end
 
--- Create tabs
+-- Create tabs and their content
 local tab1 = createTabButton("Tab 1", contentFrame1)
+createButtonsForTab(contentFrame1, "Tab 1")
+
 local tab2 = createTabButton("Tab 2", contentFrame2)
+createButtonsForTab(contentFrame2, "Tab 2")
+
 local tab3 = createTabButton("Tab 3", contentFrame3)
+createButtonsForTab(contentFrame3, "Tab 3")
 
 -- Set first tab as active initially
 tab1.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-
--- Add some sample content to the tabs
-local label1 = Instance.new("TextLabel")
-label1.Text = "This is Tab 1 Content"
-label1.Size = UDim2.new(0.8, 0, 0.1, 0)
-label1.Position = UDim2.new(0.1, 0, 0.1, 0)
-label1.TextColor3 = Color3.new(1, 1, 1)
-label1.BackgroundTransparency = 1
-label1.Parent = contentFrame1
-
-local label2 = Instance.new("TextLabel")
-label2.Text = "This is Tab 2 Content"
-label2.Size = UDim2.new(0.8, 0, 0.1, 0)
-label2.Position = UDim2.new(0.1, 0, 0.1, 0)
-label2.TextColor3 = Color3.new(1, 1, 1)
-label2.BackgroundTransparency = 1
-label2.Parent = contentFrame2
-
-local label3 = Instance.new("TextLabel")
-label3.Text = "This is Tab 3 Content"
-label3.Size = UDim2.new(0.8, 0, 0.1, 0)
-label3.Position = UDim2.new(0.1, 0, 0.1, 0)
-label3.TextColor3 = Color3.new(1, 1, 1)
-label3.BackgroundTransparency = 1
-label3.Parent = contentFrame3
 
 -- Dragging functionality
 local dragInput
