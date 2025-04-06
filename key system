@@ -23,6 +23,7 @@ titleLabel.BackgroundTransparency = 1
 titleLabel.Text = "ExampleHub | Key System"
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 titleLabel.TextScaled = true
+titleLabel.TextSize = 10
 titleLabel.Font = Enum.Font.GothamBold
 titleLabel.Parent = mainFrame
 
