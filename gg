@@ -73,19 +73,19 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System - In frame4 ]--
+--[ Tab System - Now in frame2 (right panel) ]--
 local tabsContainer = Instance.new("Frame")
 tabsContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
 tabsContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
 tabsContainer.BackgroundTransparency = 1
-tabsContainer.Parent = frame4
+tabsContainer.Parent = frame2
 
 local tabsLayout = Instance.new("UIListLayout")
 tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsContainer
 
--- Create content frames for tabs
+-- Create content frames for tabs (in frame1)
 local contentFrame1 = Instance.new("Frame")
 contentFrame1.Size = UDim2.new(1, 0, 1, 0)
 contentFrame1.BackgroundTransparency = 1
@@ -104,25 +104,31 @@ contentFrame3.BackgroundTransparency = 1
 contentFrame3.Visible = false
 contentFrame3.Parent = frame1
 
--- Function to create buttons in a content frame
-local function createButtonsForTab(contentFrame, tabName)
+-- Function to create 4 buttons in a content frame
+local function createTabContent(contentFrame, tabName)
+    -- Clear any existing content
+    for _, child in ipairs(contentFrame:GetChildren()) do
+        child:Destroy()
+    end
+
+    -- Create container for buttons
     local buttonContainer = Instance.new("Frame")
     buttonContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
     buttonContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
     buttonContainer.BackgroundTransparency = 1
     buttonContainer.Parent = contentFrame
-    
+
     local buttonLayout = Instance.new("UIListLayout")
     buttonLayout.FillDirection = Enum.FillDirection.Vertical
     buttonLayout.Padding = UDim.new(0, 10)
     buttonLayout.Parent = buttonContainer
-    
+
     -- Create 4 buttons for this tab
     for i = 1, 4 do
         local button = Instance.new("TextButton")
         button.Size = UDim2.new(1, 0, 0.2, 0)
-        button.BackgroundColor3 = Color3.new(0.2, 0.2, 0.4)
-        button.Text = tabName.." Button "..i
+        button.BackgroundColor3 = Color3.new(0.2, 0.4, 0.2) -- Greenish color
+        button.Text = tabName.." Action "..i
         button.TextColor3 = Color3.new(1, 1, 1)
         button.TextSize = 14
         button.Parent = buttonContainer
@@ -133,13 +139,13 @@ local function createButtonsForTab(contentFrame, tabName)
         
         -- Example button functionality
         button.MouseButton1Click:Connect(function()
-            print(tabName.." Button "..i.." clicked!")
+            print(tabName.." Action "..i.." activated!")
         end)
     end
-    
-    -- Add a title label
+
+    -- Add title label
     local titleLabel = Instance.new("TextLabel")
-    titleLabel.Text = tabName.." Content"
+    titleLabel.Text = tabName.." Controls"
     titleLabel.Size = UDim2.new(1, 0, 0.1, 0)
     titleLabel.Position = UDim2.new(0, 0, 0, 0)
     titleLabel.TextColor3 = Color3.new(1, 1, 1)
@@ -149,7 +155,7 @@ local function createButtonsForTab(contentFrame, tabName)
     titleLabel.Parent = contentFrame
 end
 
--- Create tab buttons
+-- Create tab buttons in right panel (frame2)
 local tabButtons = {}
 
 local function createTabButton(name, contentFrame)
@@ -186,14 +192,14 @@ local function createTabButton(name, contentFrame)
 end
 
 -- Create tabs and their content
-local tab1 = createTabButton("Tab 1", contentFrame1)
-createButtonsForTab(contentFrame1, "Tab 1")
+local tab1 = createTabButton("Main", contentFrame1)
+createTabContent(contentFrame1, "Main")
 
-local tab2 = createTabButton("Tab 2", contentFrame2)
-createButtonsForTab(contentFrame2, "Tab 2")
+local tab2 = createTabButton("Tools", contentFrame2)
+createTabContent(contentFrame2, "Tools")
 
-local tab3 = createTabButton("Tab 3", contentFrame3)
-createButtonsForTab(contentFrame3, "Tab 3")
+local tab3 = createTabButton("Settings", contentFrame3)
+createTabContent(contentFrame3, "Settings")
 
 -- Set first tab as active initially
 tab1.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
