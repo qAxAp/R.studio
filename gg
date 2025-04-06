@@ -4,7 +4,6 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
---[ The main frames ]--
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
@@ -33,7 +32,6 @@ frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
 
---[UI corner section]--
 local corner1 = Instance.new("UICorner")
 corner1.CornerRadius = UDim.new(0, 6) 
 corner1.Parent = frame1
@@ -50,7 +48,6 @@ local corner4 = Instance.new("UICorner")
 corner4.CornerRadius = UDim.new(0, 2) 
 corner4.Parent = frame4
 
---[Minimize and Close button]--
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 15, 0, 15)
 closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
@@ -73,7 +70,6 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System ]--
 local tabsScrollingFrame = Instance.new("ScrollingFrame")
 tabsScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 tabsScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -87,7 +83,6 @@ tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsScrollingFrame
 
--- Create content frames for tabs (in frame1)
 local contentFrames = {}
 for i = 1, 9 do
     local frame = Instance.new("Frame")
@@ -98,7 +93,6 @@ for i = 1, 9 do
     contentFrames[i] = frame
 end
 
---[ Loadstring Buttons ]--
 local loadstringScrollingFrame = Instance.new("ScrollingFrame")
 loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 loadstringScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -112,7 +106,6 @@ loadstringLayout.FillDirection = Enum.FillDirection.Vertical
 loadstringLayout.Padding = UDim.new(0, 10)
 loadstringLayout.Parent = loadstringScrollingFrame
 
--- Game scripts data
 local gameScripts = {
     ["Blox Fruits"] = {
         {Name = "Nova Hub", Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Nova-OP/NovaHub/main/NovaHubLoader.lua'))()"},
@@ -179,16 +172,13 @@ local gameScripts = {
     }
 }
 
--- Function to create loadstring buttons
 local function createLoadstringButtons(gameName)
-    -- Clear existing buttons
     for _, child in ipairs(loadstringScrollingFrame:GetChildren()) do
         if child:IsA("TextButton") then
             child:Destroy()
         end
     end
 
-    -- Create new buttons
     local scripts = gameScripts[gameName] or {}
     for _, scriptData in ipairs(scripts) do
         local button = Instance.new("TextButton")
@@ -210,7 +200,6 @@ local function createLoadstringButtons(gameName)
     end
 end
 
--- Create tab buttons
 local tabButtons = {}
 local gameNames = {
     "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
@@ -224,7 +213,7 @@ for i, gameName in ipairs(gameNames) do
     tabButton.BackgroundColor3 = i == 1 and Color3.new(0.3, 0.3, 0.3) or Color3.new(0.2, 0.2, 0.2)
     tabButton.Text = gameName
     tabButton.TextColor3 = Color3.new(1, 1, 1)
-    tabButton.TextSize = 10
+    tabButton.TextSize = 8
     tabButton.Parent = tabsScrollingFrame
     
     local tabCorner = Instance.new("UICorner")
@@ -232,31 +221,25 @@ for i, gameName in ipairs(gameNames) do
     tabCorner.Parent = tabButton
     
     tabButton.MouseButton1Click:Connect(function()
-        -- Hide all content frames
         for _, frame in ipairs(contentFrames) do
             frame.Visible = false
         end
         
-        -- Show the selected content frame
         contentFrames[i].Visible = true
         
-        -- Update tab button appearances
         for _, btn in ipairs(tabButtons) do
             btn.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
         end
         tabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
         
-        -- Update loadstring buttons
         createLoadstringButtons(gameName)
     end)
     
     table.insert(tabButtons, tabButton)
 end
 
--- Initialize first tab
 createLoadstringButtons("Blox Fruits")
 
--- Dragging functionality
 local dragInput
 local dragStart
 local startPositions = {}
