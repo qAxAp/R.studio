@@ -240,9 +240,11 @@ end
 
 createLoadstringButtons("Blox Fruits")
 
+-- Improved dragging functionality for mobile
 local dragInput
 local dragStart
 local startPositions = {}
+local isDragging = false
 
 local function updatePositions(delta)
     frame1.Position = UDim2.new(
@@ -271,8 +273,9 @@ local function updatePositions(delta)
     )
 end
 
-frame3.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+-- Touch support for mobile
+local function onInputBegan(input)
+    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragStart = input.Position
         startPositions = {
             frame1 = frame1.Position,
@@ -280,24 +283,29 @@ frame3.InputBegan:Connect(function(input)
             frame3 = frame3.Position,
             frame4 = frame4.Position
         }
+        isDragging = true
         
         local connection
         connection = input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
+                isDragging = false
                 connection:Disconnect()
             end
         end)
     end
-end)
+end
 
-frame3.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragStart then
+local function onInputChanged(input)
+    if isDragging and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
         dragInput = input
     end
-end)
+end
+
+frame3.InputBegan:Connect(onInputBegan)
+frame3.InputChanged:Connect(onInputChanged)
 
 game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if input == dragInput and dragStart then
+    if isDragging and input == dragInput and dragStart then
         local delta = input.Position - dragStart
         updatePositions(delta)
     end
