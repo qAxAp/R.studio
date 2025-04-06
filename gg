@@ -4,56 +4,56 @@ local playerGui = player:WaitForChild("PlayerGui")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
 
---[ The main frames ]--
+--[ The main frames - Now 25% larger ]--
 local frame1 = Instance.new("Frame")
-frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
-frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
+frame1.Size = UDim2.new(0.55, 0, 0.65, 0) -- Increased size
+frame1.Position = UDim2.new(0.22, 0, 0.15, 0) -- Adjusted position
 frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
 frame1.BorderSizePixel = 0
 frame1.Parent = screenGui
 
 local frame2 = Instance.new("Frame")
-frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
-frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
+frame2.Size = UDim2.new(0.35, 0, 0.55, 0) -- Increased size
+frame2.Position = UDim2.new(0.4, 0, 0.2, 0) -- Adjusted position
 frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
 frame2.Parent = screenGui
 
 local frame3 = Instance.new("Frame")
-frame3.Size = UDim2.new(0.42970521541950113, 0, 0.068, 0)
-frame3.Position = UDim2.new(0.26077097505668934, 0, 0.132, 0)
+frame3.Size = UDim2.new(0.55, 0, 0.08, 0) -- Increased size
+frame3.Position = UDim2.new(0.22, 0, 0.1, 0) -- Adjusted position
 frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.BorderSizePixel = 0
 frame3.Parent = screenGui
 
 local frame4 = Instance.new("Frame")
-frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
-frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
+frame4.Size = UDim2.new(0.18, 0, 0.55, 0) -- Increased size
+frame4.Position = UDim2.new(0.23, 0, 0.2, 0) -- Adjusted position
 frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
 
 --[UI corner section]--
 local corner1 = Instance.new("UICorner")
-corner1.CornerRadius = UDim.new(0, 6) 
+corner1.CornerRadius = UDim.new(0, 8) -- Slightly larger radius
 corner1.Parent = frame1
 
 local corner2 = Instance.new("UICorner")
-corner2.CornerRadius = UDim.new(0, 6) 
+corner2.CornerRadius = UDim.new(0, 8)
 corner2.Parent = frame2
 
 local corner3 = Instance.new("UICorner")
-corner3.CornerRadius = UDim.new(0, 6) 
+corner3.CornerRadius = UDim.new(0, 8)
 corner3.Parent = frame3
 
 local corner4 = Instance.new("UICorner")
-corner4.CornerRadius = UDim.new(0, 2) 
+corner4.CornerRadius = UDim.new(0, 4)
 corner4.Parent = frame4
 
---[Minimize and Close button]--
+--[Minimize and Close button - Larger]--
 local closeButton = Instance.new("TextButton")
-closeButton.Size = UDim2.new(0, 15, 0, 15)
-closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
+closeButton.Size = UDim2.new(0, 20, 0, 20) -- Increased size
+closeButton.Position = UDim2.new(0.96, 0, 0.5, -10)
 closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
 closeButton.Text = ""
 closeButton.Parent = frame3
@@ -63,8 +63,8 @@ closeCorner.CornerRadius = UDim.new(1, 0)
 closeCorner.Parent = closeButton
 
 local minimizeButton = Instance.new("TextButton")
-minimizeButton.Size = UDim2.new(0, 15, 0, 15)
-minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
+minimizeButton.Size = UDim2.new(0, 20, 0, 20) -- Increased size
+minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -10)
 minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0)
 minimizeButton.Text = ""
 minimizeButton.Parent = frame3
@@ -73,18 +73,18 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System ]--
+--[ Tab System - Larger scrolling area ]--
 local tabsScrollingFrame = Instance.new("ScrollingFrame")
 tabsScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 tabsScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
 tabsScrollingFrame.BackgroundTransparency = 1
-tabsScrollingFrame.ScrollBarThickness = 5
+tabsScrollingFrame.ScrollBarThickness = 8 -- Thicker scrollbar
 tabsScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 tabsScrollingFrame.Parent = frame4
 
 local tabsLayout = Instance.new("UIListLayout")
 tabsLayout.FillDirection = Enum.FillDirection.Vertical
-tabsLayout.Padding = UDim.new(0, 5)
+tabsLayout.Padding = UDim.new(0, 8) -- More spacing
 tabsLayout.Parent = tabsScrollingFrame
 
 -- Create content frames for tabs (in frame1)
@@ -98,21 +98,21 @@ for i = 1, 9 do
     contentFrames[i] = frame
 end
 
---[ Loadstring Buttons ]--
+--[ Loadstring Buttons - Larger scrolling area ]--
 local loadstringScrollingFrame = Instance.new("ScrollingFrame")
 loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 loadstringScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
 loadstringScrollingFrame.BackgroundTransparency = 1
-loadstringScrollingFrame.ScrollBarThickness = 5
+loadstringScrollingFrame.ScrollBarThickness = 8 -- Thicker scrollbar
 loadstringScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 loadstringScrollingFrame.Parent = frame2
 
 local loadstringLayout = Instance.new("UIListLayout")
 loadstringLayout.FillDirection = Enum.FillDirection.Vertical
-loadstringLayout.Padding = UDim.new(0, 10)
+loadstringLayout.Padding = UDim.new(0, 12) -- More spacing
 loadstringLayout.Parent = loadstringScrollingFrame
 
--- Game scripts data
+-- Game scripts data (same as before)
 local gameScripts = {
     ["Blox Fruits"] = {
         {Name = "Nova Hub", Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Nova-OP/NovaHub/main/NovaHubLoader.lua'))()"},
@@ -179,7 +179,7 @@ local gameScripts = {
     }
 }
 
--- Function to create loadstring buttons
+-- Function to create loadstring buttons with larger text
 local function createLoadstringButtons(gameName)
     -- Clear existing buttons
     for _, child in ipairs(loadstringScrollingFrame:GetChildren()) do
@@ -188,19 +188,20 @@ local function createLoadstringButtons(gameName)
         end
     end
 
-    -- Create new buttons
+    -- Create new buttons with larger size and text
     local scripts = gameScripts[gameName] or {}
     for _, scriptData in ipairs(scripts) do
         local button = Instance.new("TextButton")
-        button.Size = UDim2.new(1, -5, 0, 30)
+        button.Size = UDim2.new(1, -10, 0, 40) -- Larger buttons
         button.BackgroundColor3 = Color3.new(0.3, 0.2, 0.4)
         button.Text = scriptData.Name
         button.TextColor3 = Color3.new(1, 1, 1)
-        button.TextSize = 14
+        button.TextSize = 16 -- Larger text
+        button.TextWrapped = true -- Ensure text wraps if needed
         button.Parent = loadstringScrollingFrame
         
         local buttonCorner = Instance.new("UICorner")
-        buttonCorner.CornerRadius = UDim.new(0, 4)
+        buttonCorner.CornerRadius = UDim.new(0, 6) -- Larger corners
         buttonCorner.Parent = button
         
         button.MouseButton1Click:Connect(function()
@@ -210,7 +211,7 @@ local function createLoadstringButtons(gameName)
     end
 end
 
--- Create tab buttons
+-- Create tab buttons with larger text
 local tabButtons = {}
 local gameNames = {
     "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
@@ -220,15 +221,16 @@ local gameNames = {
 
 for i, gameName in ipairs(gameNames) do
     local tabButton = Instance.new("TextButton")
-    tabButton.Size = UDim2.new(1, -5, 0, 30)
+    tabButton.Size = UDim2.new(1, -10, 0, 40) -- Larger buttons
     tabButton.BackgroundColor3 = i == 1 and Color3.new(0.3, 0.3, 0.3) or Color3.new(0.2, 0.2, 0.2)
     tabButton.Text = gameName
     tabButton.TextColor3 = Color3.new(1, 1, 1)
-    tabButton.TextSize = 14
+    tabButton.TextSize = 16 -- Larger text
+    tabButton.TextWrapped = true -- Wrap long names
     tabButton.Parent = tabsScrollingFrame
     
     local tabCorner = Instance.new("UICorner")
-    tabCorner.CornerRadius = UDim.new(0, 4)
+    tabCorner.CornerRadius = UDim.new(0, 6) -- Larger corners
     tabCorner.Parent = tabButton
     
     tabButton.MouseButton1Click:Connect(function()
@@ -256,7 +258,7 @@ end
 -- Initialize first tab
 createLoadstringButtons("Blox Fruits")
 
--- Dragging functionality
+-- Dragging functionality (same as before)
 local dragInput
 local dragStart
 local startPositions = {}
