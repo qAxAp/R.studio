@@ -73,15 +73,15 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
---[ Tab System ]--
+--[ Tab System - Now in frame4 ]--
 local tabsContainer = Instance.new("Frame")
-tabsContainer.Size = UDim2.new(0.7, 0, 1, 0)
-tabsContainer.Position = UDim2.new(0.05, 0, 0, 0)
+tabsContainer.Size = UDim2.new(0.9, 0, 0.8, 0)
+tabsContainer.Position = UDim2.new(0.05, 0, 0.1, 0)
 tabsContainer.BackgroundTransparency = 1
-tabsContainer.Parent = frame3
+tabsContainer.Parent = frame4
 
 local tabsLayout = Instance.new("UIListLayout")
-tabsLayout.FillDirection = Enum.FillDirection.Horizontal
+tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsContainer
 
@@ -109,8 +109,7 @@ local tabButtons = {}
 
 local function createTabButton(name, contentFrame)
     local tabButton = Instance.new("TextButton")
-    tabButton.Size = UDim2.new(0.2, 0, 0.8, 0)
-    tabButton.Position = UDim2.new(0, 0, 0.1, 0)
+    tabButton.Size = UDim2.new(1, 0, 0.15, 0)
     tabButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
     tabButton.Text = name
     tabButton.TextColor3 = Color3.new(1, 1, 1)
