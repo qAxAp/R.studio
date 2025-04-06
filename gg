@@ -14,7 +14,7 @@ frame1.Parent = screenGui
 
 local frame2 = Instance.new("Frame")
 frame2.Size = UDim2.new(0.35, 0, 0.55, 0)
-frame2.Position = UDim2.new(0.45, 0, 0.2, 0) -- Moved right for better spacing
+frame2.Position = UDim2.new(0.35, 0, 0.2, 0) -- Moved right for better spacing
 frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
 frame2.Parent = screenGui
