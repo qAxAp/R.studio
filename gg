@@ -1,3 +1,5 @@
+-- for main hub http://scriptblox-2-0.glitch.me/view/b43732f7
+
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
@@ -170,6 +172,11 @@ local gameScripts = {
         {Name = "Nebula", Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Nebula-Hub/Nebula/main/RainbowFriends.lua'))()"},
         {Name = "Vynixu", Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vynixu/Scripts/main/RainbowFriends.lua'))()"}
     }
+    ["Universal"] = {
+        {Name = "Infinite Yield", Script = "loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()"},
+        {Name = "Nameless admin", Script = "loadstring(game:HttpGet("https://raw.githubusercontent.com/FilteringEnabled/NamelessAdmin/main/Source"))()"},
+        {Name = "Fly gui", Script = "loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()"},
+    }
 }
 
 local function createLoadstringButtons(gameName)
@@ -204,7 +211,7 @@ local tabButtons = {}
 local gameNames = {
     "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
     "Arsenal", "Murder Mystery 2", "Tower of Hell", 
-    "Adopt Me!", "BedWars", "Rainbow Friends"
+    "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
 }
 
 for i, gameName in ipairs(gameNames) do
