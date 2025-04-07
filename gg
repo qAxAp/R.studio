@@ -1,5 +1,3 @@
--- for main hub http://scriptblox-2-0.glitch.me/view/b43732f7
-
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
