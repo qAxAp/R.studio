@@ -86,7 +86,7 @@ tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsScrollingFrame
 
 local contentFrames = {}
-for i = 1, 9 do
+for i = 1, 10 do
     local frame = Instance.new("Frame")
     frame.Size = UDim2.new(1, 0, 1, 0)
     frame.BackgroundTransparency = 1
@@ -247,7 +247,7 @@ end
 
 createLoadstringButtons("Blox Fruits")
 
--- Improved dragging functionality for mobile
+
 local dragInput
 local dragStart
 local startPositions = {}
