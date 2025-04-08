@@ -199,7 +199,7 @@ local function createGameDropdowns()
         dropdownButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
         dropdownButton.Text = "  "..gameName
         dropdownButton.TextColor3 = Color3.new(1, 1, 1)
-        dropdownButton.TextSize = 12
+        dropdownButton.TextSize = 8
         dropdownButton.TextXAlignment = Enum.TextXAlignment.Left
         dropdownButton.Parent = loadstringScrollingFrame
         
