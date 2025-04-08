@@ -209,7 +209,7 @@ local function createGameDropdowns()
         
         -- Create dropdown arrow (like in the image)
         local arrow = Instance.new("ImageLabel")
-        arrow.Size = UDim2.new(0, 15, 0, 15)
+        arrow.Size = UDim2.new(0, 10, 0, 10)
         arrow.Position = UDim2.new(1, -20, 0.5, -7)
         arrow.BackgroundTransparency = 1
         arrow.Image = "rbxassetid://6031094667" -- Down arrow icon
