@@ -83,12 +83,18 @@ tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsScrollingFrame
 
--- Create a single content frame (we only need one now)
-local contentFrame = Instance.new("Frame")
-contentFrame.Size = UDim2.new(1, 0, 1, 0)
-contentFrame.BackgroundTransparency = 1
-contentFrame.Visible = true
-contentFrame.Parent = frame1
+-- Create two content frames: one for Main and one empty
+local contentFrames = {
+    Main = Instance.new("Frame"),
+    Empty = Instance.new("Frame")
+}
+
+for name, frame in pairs(contentFrames) do
+    frame.Size = UDim2.new(1, 0, 1, 0)
+    frame.BackgroundTransparency = 1
+    frame.Visible = (name == "Main")
+    frame.Parent = frame1
+end
 
 local loadstringScrollingFrame = Instance.new("ScrollingFrame")
 loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
@@ -202,7 +208,109 @@ local function createLoadstringButtons(gameName)
     end
 end
 
--- Create a single "Main" tab button
+-- Create the Main tab content with dropdown buttons
+local mainContentFrame = contentFrames.Main
+local mainScrollingFrame = Instance.new("ScrollingFrame")
+mainScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
+mainScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
+mainScrollingFrame.BackgroundTransparency = 1
+mainScrollingFrame.ScrollBarThickness = 5
+mainScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
+mainScrollingFrame.Parent = mainContentFrame
+
+local mainLayout = Instance.new("UIListLayout")
+mainLayout.FillDirection = Enum.FillDirection.Vertical
+mainLayout.Padding = UDim.new(0, 10)
+mainLayout.Parent = mainScrollingFrame
+
+local gameNames = {
+    "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
+    "Arsenal", "Murder Mystery 2", "Tower of Hell", 
+    "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
+}
+
+-- Create dropdown buttons for each game
+for _, gameName in ipairs(gameNames) do
+    local dropdownButton = Instance.new("TextButton")
+    dropdownButton.Size = UDim2.new(1, -10, 0, 30)
+    dropdownButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
+    dropdownButton.Text = gameName
+    dropdownButton.TextColor3 = Color3.new(1, 1, 1)
+    dropdownButton.TextSize = 12
+    dropdownButton.Parent = mainScrollingFrame
+    
+    local dropdownCorner = Instance.new("UICorner")
+    dropdownCorner.CornerRadius = UDim.new(0, 4)
+    dropdownCorner.Parent = dropdownButton
+    
+    -- Create dropdown content frame
+    local dropdownContent = Instance.new("Frame")
+    dropdownContent.Size = UDim2.new(1, -20, 0, 0) -- Height starts at 0
+    dropdownContent.Position = UDim2.new(0, 10, 0, 35)
+    dropdownContent.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15)
+    dropdownContent.BorderSizePixel = 0
+    dropdownContent.ClipsDescendants = true
+    dropdownContent.Parent = dropdownButton
+    
+    local dropdownContentCorner = Instance.new("UICorner")
+    dropdownContentCorner.CornerRadius = UDim.new(0, 4)
+    dropdownContentCorner.Parent = dropdownContent
+    
+    local dropdownContentLayout = Instance.new("UIListLayout")
+    dropdownContentLayout.FillDirection = Enum.FillDirection.Vertical
+    dropdownContentLayout.Padding = UDim.new(0, 5)
+    dropdownContentLayout.Parent = dropdownContent
+    
+    -- Add script buttons to dropdown
+    local scripts = gameScripts[gameName] or {}
+    for _, scriptData in ipairs(scripts) do
+        local scriptButton = Instance.new("TextButton")
+        scriptButton.Size = UDim2.new(1, -10, 0, 25)
+        scriptButton.Position = UDim2.new(0, 5, 0, 0)
+        scriptButton.BackgroundColor3 = Color3.new(0.25, 0.15, 0.35)
+        scriptButton.Text = scriptData.Name
+        scriptButton.TextColor3 = Color3.new(1, 1, 1)
+        scriptButton.TextSize = 10
+        scriptButton.Parent = dropdownContent
+        
+        local scriptButtonCorner = Instance.new("UICorner")
+        scriptButtonCorner.CornerRadius = UDim.new(0, 4)
+        scriptButtonCorner.Parent = scriptButton
+        
+        scriptButton.MouseButton1Click:Connect(function()
+            loadstring(scriptData.Script)()
+        end)
+    end
+    
+    -- Calculate total height needed for dropdown content
+    local totalHeight = #scripts * 30 + (#scripts - 1) * 5
+    
+    -- Toggle dropdown
+    local isOpen = false
+    dropdownButton.MouseButton1Click:Connect(function()
+        isOpen = not isOpen
+        
+        if isOpen then
+            dropdownContent:TweenSize(
+                UDim2.new(1, -20, 0, totalHeight),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quad,
+                0.2,
+                true
+            )
+        else
+            dropdownContent:TweenSize(
+                UDim2.new(1, -20, 0, 0),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quad,
+                0.2,
+                true
+            )
+        end
+    end)
+end
+
+-- Create tab buttons (just Main for now)
 local mainTabButton = Instance.new("TextButton")
 mainTabButton.Size = UDim2.new(1, -5, 0, 30)
 mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
@@ -215,85 +323,17 @@ local tabCorner = Instance.new("UICorner")
 tabCorner.CornerRadius = UDim.new(0, 4)
 tabCorner.Parent = mainTabButton
 
--- Create a frame to hold the game buttons (this will be the dropdown content)
-local dropdownFrame = Instance.new("Frame")
-dropdownFrame.Size = UDim2.new(1, -10, 0, 0) -- Height starts at 0
-dropdownFrame.Position = UDim2.new(0, 5, 0, 35)
-dropdownFrame.BackgroundColor3 = Color3.new(0.15, 0.15, 0.15)
-dropdownFrame.BorderSizePixel = 0
-dropdownFrame.ClipsDescendants = true
-dropdownFrame.Parent = tabsScrollingFrame
-
-local dropdownCorner = Instance.new("UICorner")
-dropdownCorner.CornerRadius = UDim.new(0, 4)
-dropdownCorner.Parent = dropdownFrame
-
-local dropdownLayout = Instance.new("UIListLayout")
-dropdownLayout.FillDirection = Enum.FillDirection.Vertical
-dropdownLayout.Padding = UDim.new(0, 5)
-dropdownLayout.Parent = dropdownFrame
-
--- Create game buttons for the dropdown
-local gameButtons = {}
-local gameNames = {
-    "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
-    "Arsenal", "Murder Mystery 2", "Tower of Hell", 
-    "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
-}
-
-for _, gameName in ipairs(gameNames) do
-    local gameButton = Instance.new("TextButton")
-    gameButton.Size = UDim2.new(1, -10, 0, 25)
-    gameButton.Position = UDim2.new(0, 5, 0, 0)
-    gameButton.BackgroundColor3 = Color3.new(0.2, 0.2, 0.2)
-    gameButton.Text = gameName
-    gameButton.TextColor3 = Color3.new(1, 1, 1)
-    gameButton.TextSize = 10
-    gameButton.Parent = dropdownFrame
-    
-    local gameButtonCorner = Instance.new("UICorner")
-    gameButtonCorner.CornerRadius = UDim.new(0, 4)
-    gameButtonCorner.Parent = gameButton
-    
-    gameButton.MouseButton1Click:Connect(function()
-        createLoadstringButtons(gameName)
-    end)
-    
-    table.insert(gameButtons, gameButton)
-end
-
--- Calculate the total height needed for the dropdown
-local totalHeight = 0
-for _, button in ipairs(gameButtons) do
-    totalHeight = totalHeight + button.AbsoluteSize.Y + dropdownLayout.Padding.Offset
-end
-
--- Toggle dropdown visibility
-local isDropdownOpen = false
+-- Tab switching functionality
 mainTabButton.MouseButton1Click:Connect(function()
-    isDropdownOpen = not isDropdownOpen
-    
-    if isDropdownOpen then
-        dropdownFrame:TweenSize(
-            UDim2.new(1, -10, 0, totalHeight),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.2,
-            true
-        )
-    else
-        dropdownFrame:TweenSize(
-            UDim2.new(1, -10, 0, 0),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.2,
-            true
-        )
+    for _, frame in pairs(contentFrames) do
+        frame.Visible = false
     end
+    contentFrames.Main.Visible = true
+    mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
 end)
 
--- Initialize with Blox Fruits scripts
-createLoadstringButtons("Blox Fruits")
+-- Initialize with Main tab open
+contentFrames.Main.Visible = true
 
 -- Dragging functionality
 local dragInput
