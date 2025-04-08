@@ -3,6 +3,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
+screenGui.DisplayOrder = 10 -- Ensure it displays on top
 
 -- Main window frame
 local frame1 = Instance.new("Frame")
@@ -192,12 +193,16 @@ local function createGameDropdowns()
         "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
     }
 
+    -- Keep track of all dropdowns to manage z-index
+    local allDropdowns = {}
+
     for _, gameName in ipairs(gameNames) do
-        -- Create dropdown button container
+        -- Create dropdown container
         local dropdownContainer = Instance.new("Frame")
         dropdownContainer.Size = UDim2.new(1, -10, 0, 35)
         dropdownContainer.BackgroundTransparency = 1
         dropdownContainer.Parent = loadstringScrollingFrame
+        table.insert(allDropdowns, dropdownContainer)
 
         -- Create dropdown button
         local dropdownButton = Instance.new("TextButton")
@@ -207,28 +212,33 @@ local function createGameDropdowns()
         dropdownButton.TextColor3 = Color3.new(1, 1, 1)
         dropdownButton.TextSize = 12
         dropdownButton.TextXAlignment = Enum.TextXAlignment.Left
+        dropdownButton.ZIndex = 2
         dropdownButton.Parent = dropdownContainer
         
         local dropdownCorner = Instance.new("UICorner")
         dropdownCorner.CornerRadius = UDim.new(0, 4)
         dropdownCorner.Parent = dropdownButton
         
-        -- Create dropdown arrow (properly sized and positioned)
+        -- Create proper dropdown arrow (triangle shape)
         local arrow = Instance.new("ImageLabel")
+        arrow.Name = "Arrow"
         arrow.Size = UDim2.new(0, 12, 0, 12)
         arrow.Position = UDim2.new(1, -25, 0.5, -6)
         arrow.BackgroundTransparency = 1
-        arrow.Image = "rbxassetid://6031094667"
+        arrow.Image = "rbxassetid://71659683" -- Triangle arrow icon
         arrow.ImageColor3 = Color3.new(1, 1, 1)
+        arrow.ZIndex = 2
         arrow.Parent = dropdownButton
         
-        -- Create dropdown content frame (positioned BELOW the button)
+        -- Create dropdown content frame
         local dropdownContent = Instance.new("Frame")
-        dropdownContent.Size = UDim2.new(1, -5, 0, 0)
-        dropdownContent.Position = UDim2.new(0, 5, 1, 5)
+        dropdownContent.Name = "DropdownContent"
+        dropdownContent.Size = UDim2.new(1, 0, 0, 0)
+        dropdownContent.Position = UDim2.new(0, 0, 1, 5)
         dropdownContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
         dropdownContent.BorderSizePixel = 0
         dropdownContent.ClipsDescendants = true
+        dropdownContent.ZIndex = 3 -- Higher than buttons
         dropdownContent.Parent = dropdownContainer
         
         local dropdownContentCorner = Instance.new("UICorner")
@@ -251,6 +261,7 @@ local function createGameDropdowns()
             scriptButton.TextColor3 = Color3.new(1, 1, 1)
             scriptButton.TextSize = 11
             scriptButton.TextXAlignment = Enum.TextXAlignment.Left
+            scriptButton.ZIndex = 4 -- Highest z-index
             scriptButton.Parent = dropdownContent
             
             local scriptButtonCorner = Instance.new("UICorner")
@@ -266,28 +277,41 @@ local function createGameDropdowns()
         local totalHeight = #scripts * 35 + (#scripts - 1) * 5
         
         -- Toggle dropdown with proper arrow rotation
-        local isOpen = false
         dropdownButton.MouseButton1Click:Connect(function()
-            isOpen = not isOpen
+            -- Close all other dropdowns first
+            for _, otherDropdown in ipairs(allDropdowns) do
+                if otherDropdown ~= dropdownContainer then
+                    local content = otherDropdown:FindFirstChild("DropdownContent")
+                    if content then
+                        content.Size = UDim2.new(1, 0, 0, 0)
+                        local arrow = otherDropdown:FindFirstChild("Arrow", true)
+                        if arrow then
+                            arrow.Rotation = 0
+                        end
+                    end
+                end
+            end
             
+            -- Toggle current dropdown
+            local isOpen = dropdownContent.Size.Y.Offset > 0
             if isOpen then
                 dropdownContent:TweenSize(
-                    UDim2.new(1, -5, 0, totalHeight),
+                    UDim2.new(1, 0, 0, 0),
                     Enum.EasingDirection.Out,
                     Enum.EasingStyle.Quad,
                     0.2,
                     true
                 )
-                arrow.Rotation = 180 -- Arrow points down when open
+                arrow.Rotation = 0 -- Pointing down when closed
             else
                 dropdownContent:TweenSize(
-                    UDim2.new(1, -5, 0, 0),
+                    UDim2.new(1, 0, 0, totalHeight),
                     Enum.EasingDirection.Out,
                     Enum.EasingStyle.Quad,
                     0.2,
                     true
                 )
-                arrow.Rotation = 0 -- Arrow points up when closed
+                arrow.Rotation = 180 -- Pointing up when open
             end
         end)
     end
