@@ -321,7 +321,7 @@ end
 local mainTabButton = Instance.new("TextButton")
 mainTabButton.Size = UDim2.new(1, -5, 0, 30)
 mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-mainTabButton.Text = "MAIN"
+mainTabButton.Text = "Games"
 mainTabButton.TextColor3 = Color3.new(1, 1, 1)
 mainTabButton.TextSize = 12
 mainTabButton.Parent = tabsScrollingFrame
@@ -337,6 +337,96 @@ end)
 
 -- Initialize with Main tab content
 createGameDropdowns()
+
+-- SETTINGS TAB
+local settingsTabButton = Instance.new("TextButton")
+settingsTabButton.Size = UDim2.new(1, -5, 0, 30)
+settingsTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+settingsTabButton.Text = "Settings"
+settingsTabButton.TextColor3 = Color3.new(1, 1, 1)
+settingsTabButton.TextSize = 12
+settingsTabButton.Parent = tabsScrollingFrame
+
+local settingsCorner = Instance.new("UICorner")
+settingsCorner.CornerRadius = UDim.new(0, 4)
+settingsCorner.Parent = settingsTabButton
+
+-- SETTINGS PANEL
+local settingsPanel = Instance.new("Frame")
+settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
+settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
+settingsPanel.BackgroundTransparency = 1
+settingsPanel.Visible = false
+settingsPanel.Parent = frame2
+
+-- Layout for settings panel
+local settingsLayout = Instance.new("UIListLayout")
+settingsLayout.Padding = UDim.new(0, 10)
+settingsLayout.FillDirection = Enum.FillDirection.Vertical
+settingsLayout.Parent = settingsPanel
+
+-- Theme Buttons Function
+local function createThemeButton(name, colorSet)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(1, -10, 0, 30)
+    btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    btn.Text = name
+    btn.TextColor3 = Color3.new(1, 1, 1)
+    btn.TextSize = 12
+    btn.Parent = settingsPanel
+
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.CornerRadius = UDim.new(0, 4)
+    btnCorner.Parent = btn
+
+    btn.MouseButton1Click:Connect(function()
+        frame1.BackgroundColor3 = colorSet.Main
+        frame2.BackgroundColor3 = colorSet.Right
+        frame3.BackgroundColor3 = colorSet.Top
+        frame4.BackgroundColor3 = colorSet.Left
+    end)
+end
+
+-- Theme Presets
+local themes = {
+    ["White Theme"] = {
+        Main = Color3.fromRGB(230, 230, 230),
+        Right = Color3.fromRGB(240, 240, 240),
+        Top = Color3.fromRGB(200, 200, 200),
+        Left = Color3.fromRGB(210, 210, 210)
+    },
+    ["Blue Theme"] = {
+        Main = Color3.fromRGB(50, 100, 180),
+        Right = Color3.fromRGB(30, 70, 150),
+        Top = Color3.fromRGB(20, 60, 130),
+        Left = Color3.fromRGB(40, 80, 160)
+    },
+    ["Original Theme"] = {
+        Main = Color3.new(0.141, 0.141, 0.141),
+        Right = Color3.new(0.059, 0.059, 0.059),
+        Top = Color3.new(0.059, 0.059, 0.059),
+        Left = Color3.new(0.059, 0.059, 0.059)
+    }
+}
+
+-- Create buttons for each theme
+for themeName, colors in pairs(themes) do
+    createThemeButton(themeName, colors)
+end
+
+-- Handle tab switching
+mainTabButton.MouseButton1Click:Connect(function()
+    settingsPanel.Visible = false
+    loadstringScrollingFrame.Visible = true
+    createGameDropdowns()
+end)
+
+settingsTabButton.MouseButton1Click:Connect(function()
+    loadstringScrollingFrame.Visible = false
+    settingsPanel.Visible = true
+end)
+
+
 
 -- Dragging functionality
 local dragInput
