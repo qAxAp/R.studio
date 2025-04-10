@@ -3,9 +3,8 @@ local playerGui = player:WaitForChild("PlayerGui")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
-screenGui.DisplayOrder = 10 -- Ensure it displays on top
+screenGui.DisplayOrder = 10
 
--- Main window frame
 local frame1 = Instance.new("Frame")
 frame1.Size = UDim2.new(0.42970521541950113, 0, 0.548, 0)
 frame1.Position = UDim2.new(0.26077097505668934, 0, 0.178, 0)
@@ -13,7 +12,6 @@ frame1.BackgroundColor3 = Color3.new(0.141, 0.141, 0.141)
 frame1.BorderSizePixel = 0
 frame1.Parent = screenGui
 
--- Right panel (for scripts)
 local frame2 = Instance.new("Frame")
 frame2.Size = UDim2.new(0.264172335600907, 0, 0.482, 0)
 frame2.Position = UDim2.new(0.41609977324263037, 0, 0.214, 0)
@@ -21,7 +19,6 @@ frame2.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame2.BorderSizePixel = 0
 frame2.Parent = screenGui
 
--- Top bar
 local frame3 = Instance.new("Frame")
 frame3.Size = UDim2.new(0.42970521541950113, 0, 0.068, 0)
 frame3.Position = UDim2.new(0.26077097505668934, 0, 0.132, 0)
@@ -29,7 +26,6 @@ frame3.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame3.BorderSizePixel = 0
 frame3.Parent = screenGui
 
--- Left tabs panel
 local frame4 = Instance.new("Frame")
 frame4.Size = UDim2.new(0.1383219954648526, 0, 0.484, 0)
 frame4.Position = UDim2.new(0.2698412698412698, 0, 0.214, 0)
@@ -37,7 +33,6 @@ frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
 
--- Corners
 local corner1 = Instance.new("UICorner")
 corner1.CornerRadius = UDim.new(0, 6) 
 corner1.Parent = frame1
@@ -54,7 +49,6 @@ local corner4 = Instance.new("UICorner")
 corner4.CornerRadius = UDim.new(0, 2) 
 corner4.Parent = frame4
 
--- Close button
 local closeButton = Instance.new("TextButton")
 closeButton.Size = UDim2.new(0, 15, 0, 15)
 closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
@@ -66,7 +60,6 @@ local closeCorner = Instance.new("UICorner")
 closeCorner.CornerRadius = UDim.new(1, 0)
 closeCorner.Parent = closeButton
 
--- Minimize button
 local minimizeButton = Instance.new("TextButton")
 minimizeButton.Size = UDim2.new(0, 15, 0, 15)
 minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
@@ -78,7 +71,6 @@ local minimizeCorner = Instance.new("UICorner")
 minimizeCorner.CornerRadius = UDim.new(1, 0)
 minimizeCorner.Parent = minimizeButton
 
--- Tabs scrolling frame
 local tabsScrollingFrame = Instance.new("ScrollingFrame")
 tabsScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 tabsScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -92,7 +84,6 @@ tabsLayout.FillDirection = Enum.FillDirection.Vertical
 tabsLayout.Padding = UDim.new(0, 5)
 tabsLayout.Parent = tabsScrollingFrame
 
--- Right panel scrolling frame
 local loadstringScrollingFrame = Instance.new("ScrollingFrame")
 loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 loadstringScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -106,7 +97,6 @@ loadstringLayout.FillDirection = Enum.FillDirection.Vertical
 loadstringLayout.Padding = UDim.new(0, 5)
 loadstringLayout.Parent = loadstringScrollingFrame
 
--- Game scripts database
 local gameScripts = {
     ["Blox Fruits"] = {
         {Name = "Nova Hub", Script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Nova-OP/NovaHub/main/NovaHubLoader.lua'))()"},
@@ -178,9 +168,7 @@ local gameScripts = {
     }
 }
 
--- Function to create game dropdowns in right panel
 local function createGameDropdowns()
-    -- Clear existing content
     for _, child in ipairs(loadstringScrollingFrame:GetChildren()) do
         if child:IsA("TextButton") or child:IsA("Frame") then
             child:Destroy()
@@ -193,18 +181,15 @@ local function createGameDropdowns()
         "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
     }
 
-    -- Keep track of all dropdowns to manage z-index
     local allDropdowns = {}
 
     for _, gameName in ipairs(gameNames) do
-        -- Create dropdown container
         local dropdownContainer = Instance.new("Frame")
         dropdownContainer.Size = UDim2.new(1, -10, 0, 35)
         dropdownContainer.BackgroundTransparency = 1
         dropdownContainer.Parent = loadstringScrollingFrame
         table.insert(allDropdowns, dropdownContainer)
 
-        -- Create dropdown button
         local dropdownButton = Instance.new("TextButton")
         dropdownButton.Size = UDim2.new(1, 0, 1, 0)
         dropdownButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
@@ -214,23 +199,21 @@ local function createGameDropdowns()
         dropdownButton.TextXAlignment = Enum.TextXAlignment.Left
         dropdownButton.ZIndex = 2
         dropdownButton.Parent = dropdownContainer
-        
+
         local dropdownCorner = Instance.new("UICorner")
         dropdownCorner.CornerRadius = UDim.new(0, 4)
         dropdownCorner.Parent = dropdownButton
-        
-        -- Create proper dropdown arrow (triangle shape)
+
         local arrow = Instance.new("ImageLabel")
         arrow.Name = "Arrow"
         arrow.Size = UDim2.new(0, 12, 0, 12)
         arrow.Position = UDim2.new(1, -25, 0.5, -6)
         arrow.BackgroundTransparency = 1
-        arrow.Image = "rbxassetid://71659683" -- Triangle arrow icon
+        arrow.Image = "rbxassetid://71659683"
         arrow.ImageColor3 = Color3.new(1, 1, 1)
         arrow.ZIndex = 2
         arrow.Parent = dropdownButton
-        
-        -- Create dropdown content frame
+
         local dropdownContent = Instance.new("Frame")
         dropdownContent.Name = "DropdownContent"
         dropdownContent.Size = UDim2.new(1, 0, 0, 0)
@@ -238,19 +221,18 @@ local function createGameDropdowns()
         dropdownContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
         dropdownContent.BorderSizePixel = 0
         dropdownContent.ClipsDescendants = true
-        dropdownContent.ZIndex = 3 -- Higher than buttons
+        dropdownContent.ZIndex = 3
         dropdownContent.Parent = dropdownContainer
-        
+
         local dropdownContentCorner = Instance.new("UICorner")
         dropdownContentCorner.CornerRadius = UDim.new(0, 4)
         dropdownContentCorner.Parent = dropdownContent
-        
+
         local dropdownContentLayout = Instance.new("UIListLayout")
         dropdownContentLayout.FillDirection = Enum.FillDirection.Vertical
         dropdownContentLayout.Padding = UDim.new(0, 5)
         dropdownContentLayout.Parent = dropdownContent
-        
-        -- Add script buttons to dropdown
+
         local scripts = gameScripts[gameName] or {}
         for _, scriptData in ipairs(scripts) do
             local scriptButton = Instance.new("TextButton")
@@ -261,24 +243,21 @@ local function createGameDropdowns()
             scriptButton.TextColor3 = Color3.new(1, 1, 1)
             scriptButton.TextSize = 11
             scriptButton.TextXAlignment = Enum.TextXAlignment.Left
-            scriptButton.ZIndex = 4 -- Highest z-index
+            scriptButton.ZIndex = 4
             scriptButton.Parent = dropdownContent
-            
+
             local scriptButtonCorner = Instance.new("UICorner")
             scriptButtonCorner.CornerRadius = UDim.new(0, 4)
             scriptButtonCorner.Parent = scriptButton
-            
+
             scriptButton.MouseButton1Click:Connect(function()
                 loadstring(scriptData.Script)()
             end)
         end
-        
-        -- Calculate total height needed for dropdown content
+
         local totalHeight = #scripts * 35 + (#scripts - 1) * 5
-        
-        -- Toggle dropdown with proper arrow rotation
+
         dropdownButton.MouseButton1Click:Connect(function()
-            -- Close all other dropdowns first
             for _, otherDropdown in ipairs(allDropdowns) do
                 if otherDropdown ~= dropdownContainer then
                     local content = otherDropdown:FindFirstChild("DropdownContent")
@@ -291,8 +270,7 @@ local function createGameDropdowns()
                     end
                 end
             end
-            
-            -- Toggle current dropdown
+
             local isOpen = dropdownContent.Size.Y.Offset > 0
             if isOpen then
                 dropdownContent:TweenSize(
@@ -302,7 +280,7 @@ local function createGameDropdowns()
                     0.2,
                     true
                 )
-                arrow.Rotation = 0 -- Pointing down when closed
+                arrow.Rotation = 0
             else
                 dropdownContent:TweenSize(
                     UDim2.new(1, 0, 0, totalHeight),
@@ -311,13 +289,12 @@ local function createGameDropdowns()
                     0.2,
                     true
                 )
-                arrow.Rotation = 180 -- Pointing up when open
+                arrow.Rotation = 180
             end
         end)
     end
 end
 
--- Create just the Main tab button
 local mainTabButton = Instance.new("TextButton")
 mainTabButton.Size = UDim2.new(1, -5, 0, 30)
 mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
@@ -330,15 +307,12 @@ local tabCorner = Instance.new("UICorner")
 tabCorner.CornerRadius = UDim.new(0, 4)
 tabCorner.Parent = mainTabButton
 
--- When Main tab is clicked, show game dropdowns in right panel
 mainTabButton.MouseButton1Click:Connect(function()
     createGameDropdowns()
 end)
 
--- Initialize with Main tab content
 createGameDropdowns()
 
--- SETTINGS TAB
 local settingsTabButton = Instance.new("TextButton")
 settingsTabButton.Size = UDim2.new(1, -5, 0, 30)
 settingsTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
@@ -351,7 +325,6 @@ local settingsCorner = Instance.new("UICorner")
 settingsCorner.CornerRadius = UDim.new(0, 4)
 settingsCorner.Parent = settingsTabButton
 
--- SETTINGS PANEL
 local settingsPanel = Instance.new("Frame")
 settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -359,62 +332,137 @@ settingsPanel.BackgroundTransparency = 1
 settingsPanel.Visible = false
 settingsPanel.Parent = frame2
 
--- Layout for settings panel
 local settingsLayout = Instance.new("UIListLayout")
 settingsLayout.Padding = UDim.new(0, 10)
 settingsLayout.FillDirection = Enum.FillDirection.Vertical
 settingsLayout.Parent = settingsPanel
 
--- Theme Buttons Function
-local function createThemeButton(name, colorSet)
-    local btn = Instance.new("TextButton")
-    btn.Size = UDim2.new(1, -10, 0, 30)
-    btn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-    btn.Text = name
-    btn.TextColor3 = Color3.new(1, 1, 1)
-    btn.TextSize = 12
-    btn.Parent = settingsPanel
+-- Create Themes dropdown container
+local themesDropdownContainer = Instance.new("Frame")
+themesDropdownContainer.Size = UDim2.new(1, -10, 0, 35)
+themesDropdownContainer.BackgroundTransparency = 1
+themesDropdownContainer.Parent = settingsPanel
 
-    local btnCorner = Instance.new("UICorner")
-    btnCorner.CornerRadius = UDim.new(0, 4)
-    btnCorner.Parent = btn
+local themesDropdownButton = Instance.new("TextButton")
+themesDropdownButton.Size = UDim2.new(1, 0, 1, 0)
+themesDropdownButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+themesDropdownButton.Text = "  Themes"
+themesDropdownButton.TextColor3 = Color3.new(1, 1, 1)
+themesDropdownButton.TextSize = 12
+themesDropdownButton.TextXAlignment = Enum.TextXAlignment.Left
+themesDropdownButton.ZIndex = 2
+themesDropdownButton.Parent = themesDropdownContainer
 
-    btn.MouseButton1Click:Connect(function()
-        frame1.BackgroundColor3 = colorSet.Main
-        frame2.BackgroundColor3 = colorSet.Right
-        frame3.BackgroundColor3 = colorSet.Top
-        frame4.BackgroundColor3 = colorSet.Left
-    end)
-end
+local themesDropdownCorner = Instance.new("UICorner")
+themesDropdownCorner.CornerRadius = UDim.new(0, 4)
+themesDropdownCorner.Parent = themesDropdownButton
 
--- Theme Presets
+local themesArrow = Instance.new("ImageLabel")
+themesArrow.Name = "Arrow"
+themesArrow.Size = UDim2.new(0, 12, 0, 12)
+themesArrow.Position = UDim2.new(1, -25, 0.5, -6)
+themesArrow.BackgroundTransparency = 1
+themesArrow.Image = "rbxassetid://71659683"
+themesArrow.ImageColor3 = Color3.new(1, 1, 1)
+themesArrow.ZIndex = 2
+themesArrow.Parent = themesDropdownButton
+
+local themesDropdownContent = Instance.new("Frame")
+themesDropdownContent.Name = "DropdownContent"
+themesDropdownContent.Size = UDim2.new(1, 0, 0, 0)
+themesDropdownContent.Position = UDim2.new(0, 0, 1, 5)
+themesDropdownContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+themesDropdownContent.BorderSizePixel = 0
+themesDropdownContent.ClipsDescendants = true
+themesDropdownContent.ZIndex = 3
+themesDropdownContent.Parent = themesDropdownContainer
+
+local themesDropdownContentCorner = Instance.new("UICorner")
+themesDropdownContentCorner.CornerRadius = UDim.new(0, 4)
+themesDropdownContentCorner.Parent = themesDropdownContent
+
+local themesDropdownContentLayout = Instance.new("UIListLayout")
+themesDropdownContentLayout.FillDirection = Enum.FillDirection.Vertical
+themesDropdownContentLayout.Padding = UDim.new(0, 5)
+themesDropdownContentLayout.Parent = themesDropdownContent
+
 local themes = {
-    ["White Theme"] = {
+    ["White"] = {
         Main = Color3.fromRGB(230, 230, 230),
         Right = Color3.fromRGB(240, 240, 240),
         Top = Color3.fromRGB(200, 200, 200),
         Left = Color3.fromRGB(210, 210, 210)
     },
-    ["Blue Theme"] = {
+    ["Blue"] = {
         Main = Color3.fromRGB(50, 100, 180),
         Right = Color3.fromRGB(30, 70, 150),
         Top = Color3.fromRGB(20, 60, 130),
         Left = Color3.fromRGB(40, 80, 160)
     },
-    ["Original Theme"] = {
+    ["Original"] = {
         Main = Color3.new(0.141, 0.141, 0.141),
         Right = Color3.new(0.059, 0.059, 0.059),
         Top = Color3.new(0.059, 0.059, 0.059),
         Left = Color3.new(0.059, 0.059, 0.059)
-    }
+    },
+    ["Purple"] = {
+        Main = Color3.new(69, 0, 92),
+        Right = Color3.new(46, 25, 54),
+        Top = Color3.new(46, 25, 54),
+        Left = Color3.new(46, 25, 54)
+    },
 }
 
--- Create buttons for each theme
+-- Create theme buttons inside the dropdown
 for themeName, colors in pairs(themes) do
-    createThemeButton(themeName, colors)
+    local themeButton = Instance.new("TextButton")
+    themeButton.Size = UDim2.new(1, -10, 0, 30)
+    themeButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    themeButton.Text = "  "..themeName
+    themeButton.TextColor3 = Color3.new(1, 1, 1)
+    themeButton.TextSize = 11
+    themeButton.TextXAlignment = Enum.TextXAlignment.Left
+    themeButton.ZIndex = 4
+    themeButton.Parent = themesDropdownContent
+
+    local themeButtonCorner = Instance.new("UICorner")
+    themeButtonCorner.CornerRadius = UDim.new(0, 4)
+    themeButtonCorner.Parent = themeButton
+
+    themeButton.MouseButton1Click:Connect(function()
+        frame1.BackgroundColor3 = colors.Main
+        frame2.BackgroundColor3 = colors.Right
+        frame3.BackgroundColor3 = colors.Top
+        frame4.BackgroundColor3 = colors.Left
+    end)
 end
 
--- Handle tab switching
+local totalThemesHeight = #themes * 35 + (#themes - 1) * 5
+
+-- Toggle themes dropdown
+themesDropdownButton.MouseButton1Click:Connect(function()
+    local isOpen = themesDropdownContent.Size.Y.Offset > 0
+    if isOpen then
+        themesDropdownContent:TweenSize(
+            UDim2.new(1, 0, 0, 0),
+            Enum.EasingDirection.Out,
+            Enum.EasingStyle.Quad,
+            0.2,
+            true
+        )
+        themesArrow.Rotation = 0
+    else
+        themesDropdownContent:TweenSize(
+            UDim2.new(1, 0, 0, totalThemesHeight),
+            Enum.EasingDirection.Out,
+            Enum.EasingStyle.Quad,
+            0.2,
+            true
+        )
+        themesArrow.Rotation = 180
+    end
+end)
+
 mainTabButton.MouseButton1Click:Connect(function()
     settingsPanel.Visible = false
     loadstringScrollingFrame.Visible = true
@@ -426,9 +474,6 @@ settingsTabButton.MouseButton1Click:Connect(function()
     settingsPanel.Visible = true
 end)
 
-
-
--- Dragging functionality
 local dragInput
 local dragStart
 local startPositions = {}
@@ -461,7 +506,6 @@ local function updatePositions(delta)
     )
 end
 
--- Touch support for mobile
 local function onInputBegan(input)
     if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
         dragStart = input.Position
@@ -472,7 +516,7 @@ local function onInputBegan(input)
             frame4 = frame4.Position
         }
         isDragging = true
-        
+
         local connection
         connection = input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
