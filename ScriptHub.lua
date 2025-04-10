@@ -295,8 +295,6 @@ local function createGameDropdowns()
     end
 end
 
--- [Previous code remains the same until the tabs section]
-
 local mainTabButton = Instance.new("TextButton")
 mainTabButton.Size = UDim2.new(1, -5, 0, 30)
 mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
@@ -308,15 +306,6 @@ mainTabButton.Parent = tabsScrollingFrame
 local tabCorner = Instance.new("UICorner")
 tabCorner.CornerRadius = UDim.new(0, 4)
 tabCorner.Parent = mainTabButton
-
-mainTabButton.MouseButton1Click:Connect(function()
-    settingsPanel.Visible = false
-    userPanel.Visible = false
-    loadstringScrollingFrame.Visible = true
-    createGameDropdowns()
-end)
-
-createGameDropdowns()
 
 local settingsTabButton = Instance.new("TextButton")
 settingsTabButton.Size = UDim2.new(1, -5, 0, 30)
@@ -342,7 +331,7 @@ local userCorner = Instance.new("UICorner")
 userCorner.CornerRadius = UDim.new(0, 4)
 userCorner.Parent = userTabButton
 
--- Settings Panel (existing code)
+-- Settings Panel
 local settingsPanel = Instance.new("Frame")
 settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -355,10 +344,7 @@ settingsLayout.Padding = UDim.new(0, 10)
 settingsLayout.FillDirection = Enum.FillDirection.Vertical
 settingsLayout.Parent = settingsPanel
 
--- User Panel (new code)
--- [Previous code remains the same until the User Panel section]
-
--- User Panel (updated code)
+-- User Panel
 local userPanel = Instance.new("Frame")
 userPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 userPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -367,11 +353,11 @@ userPanel.Visible = false
 userPanel.Parent = frame2
 
 local userLayout = Instance.new("UIListLayout")
-userLayout.Padding = UDim.new(0, 10) -- Reduced padding between elements
+userLayout.Padding = UDim.new(0, 10)
 userLayout.FillDirection = Enum.FillDirection.Vertical
 userLayout.Parent = userPanel
 
--- Toggle Button (moved to top)
+-- Toggle Button (Infinite Jump)
 local toggleContainer = Instance.new("Frame")
 toggleContainer.Size = UDim2.new(1, 0, 0, 30)
 toggleContainer.BackgroundTransparency = 1
@@ -398,7 +384,12 @@ toggleLabel.TextSize = 12
 toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
 toggleLabel.Parent = toggleContainer
 
--- Speed Section Label
+-- Speed Section
+local speedSection = Instance.new("Frame")
+speedSection.Size = UDim2.new(1, 0, 0, 80)
+speedSection.BackgroundTransparency = 1
+speedSection.Parent = userPanel
+
 local speedLabel = Instance.new("TextLabel")
 speedLabel.Size = UDim2.new(1, 0, 0, 20)
 speedLabel.BackgroundTransparency = 1
@@ -406,13 +397,13 @@ speedLabel.Text = "--- Speed ---"
 speedLabel.TextColor3 = Color3.new(1, 1, 1)
 speedLabel.TextSize = 12
 speedLabel.TextXAlignment = Enum.TextXAlignment.Center
-speedLabel.Parent = userPanel
+speedLabel.Parent = speedSection
 
--- Walk Speed Slider
 local walkSpeedContainer = Instance.new("Frame")
-walkSpeedContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
+walkSpeedContainer.Size = UDim2.new(1, 0, 0, 50)
 walkSpeedContainer.BackgroundTransparency = 1
-walkSpeedContainer.Parent = userPanel
+walkSpeedContainer.Position = UDim2.new(0, 0, 0, 25)
+walkSpeedContainer.Parent = speedSection
 
 local walkSpeedLabel = Instance.new("TextLabel")
 walkSpeedLabel.Size = UDim2.new(1, 0, 0, 20)
@@ -426,6 +417,7 @@ walkSpeedLabel.Parent = walkSpeedContainer
 local walkSpeedSlider = Instance.new("Frame")
 walkSpeedSlider.Size = UDim2.new(1, 0, 0, 20)
 walkSpeedSlider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+walkSpeedSlider.Position = UDim2.new(0, 0, 0, 25)
 walkSpeedSlider.Parent = walkSpeedContainer
 
 local walkSpeedSliderCorner = Instance.new("UICorner")
@@ -433,7 +425,7 @@ walkSpeedSliderCorner.CornerRadius = UDim.new(0, 4)
 walkSpeedSliderCorner.Parent = walkSpeedSlider
 
 local walkSpeedFill = Instance.new("Frame")
-walkSpeedFill.Size = UDim2.new(0, 0, 1, 0)
+walkSpeedFill.Size = UDim2.new(0.16, 0, 1, 0)
 walkSpeedFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 walkSpeedFill.Parent = walkSpeedSlider
 
@@ -447,7 +439,12 @@ walkSpeedButton.BackgroundTransparency = 1
 walkSpeedButton.Text = ""
 walkSpeedButton.Parent = walkSpeedSlider
 
--- JumpPower Section Label
+-- JumpPower Section
+local jumpSection = Instance.new("Frame")
+jumpSection.Size = UDim2.new(1, 0, 0, 80)
+jumpSection.BackgroundTransparency = 1
+jumpSection.Parent = userPanel
+
 local jumpLabel = Instance.new("TextLabel")
 jumpLabel.Size = UDim2.new(1, 0, 0, 20)
 jumpLabel.BackgroundTransparency = 1
@@ -455,13 +452,13 @@ jumpLabel.Text = "--- JumpPower ---"
 jumpLabel.TextColor3 = Color3.new(1, 1, 1)
 jumpLabel.TextSize = 12
 jumpLabel.TextXAlignment = Enum.TextXAlignment.Center
-jumpLabel.Parent = userPanel
+jumpLabel.Parent = jumpSection
 
--- Jump Height Slider
 local jumpHeightContainer = Instance.new("Frame")
-jumpHeightContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
+jumpHeightContainer.Size = UDim2.new(1, 0, 0, 50)
 jumpHeightContainer.BackgroundTransparency = 1
-jumpHeightContainer.Parent = userPanel
+jumpHeightContainer.Position = UDim2.new(0, 0, 0, 25)
+jumpHeightContainer.Parent = jumpSection
 
 local jumpHeightLabel = Instance.new("TextLabel")
 jumpHeightLabel.Size = UDim2.new(1, 0, 0, 20)
@@ -475,6 +472,7 @@ jumpHeightLabel.Parent = jumpHeightContainer
 local jumpHeightSlider = Instance.new("Frame")
 jumpHeightSlider.Size = UDim2.new(1, 0, 0, 20)
 jumpHeightSlider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+jumpHeightSlider.Position = UDim2.new(0, 0, 0, 25)
 jumpHeightSlider.Parent = jumpHeightContainer
 
 local jumpHeightSliderCorner = Instance.new("UICorner")
@@ -482,7 +480,7 @@ jumpHeightSliderCorner.CornerRadius = UDim.new(0, 4)
 jumpHeightSliderCorner.Parent = jumpHeightSlider
 
 local jumpHeightFill = Instance.new("Frame")
-jumpHeightFill.Size = UDim2.new(0, 0, 1, 0)
+jumpHeightFill.Size = UDim2.new(0.5, 0, 1, 0)
 jumpHeightFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 jumpHeightFill.Parent = jumpHeightSlider
 
@@ -496,6 +494,71 @@ jumpHeightButton.BackgroundTransparency = 1
 jumpHeightButton.Text = ""
 jumpHeightButton.Parent = jumpHeightSlider
 
+-- Slider functionality
+local function createSlider(sliderButton, fill, label, minValue, maxValue, defaultValue, propertyName)
+    local isDragging = false
+    local currentValue = defaultValue
+    
+    local function updateValue(input)
+        local sliderAbsPos = sliderButton.AbsolutePosition.X
+        local sliderAbsSize = sliderButton.AbsoluteSize.X
+        local mouseX = input.Position.X
+        
+        local relativeX = math.clamp(mouseX - sliderAbsPos, 0, sliderAbsSize)
+        local ratio = relativeX / sliderAbsSize
+        currentValue = math.floor(minValue + (maxValue - minValue) * ratio)
+        
+        fill.Size = UDim2.new(ratio, 0, 1, 0)
+        label.Text = propertyName == "WalkSpeed" and "Walk Speed: "..currentValue or "Jump Height: "..currentValue
+        
+        -- Update player's property if they exist
+        local character = player.Character
+        if character then
+            local humanoid = character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid[propertyName] = currentValue
+            end
+        end
+    end
+    
+    sliderButton.MouseButton1Down:Connect(function()
+        isDragging = true
+        updateValue(game:GetService("UserInputService"):GetMouseLocation())
+    end)
+    
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+            updateValue(input)
+        end
+    end)
+    
+    game:GetService("UserInputService").InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            isDragging = false
+        end
+    end)
+    
+    -- Set initial value
+    local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        currentValue = humanoid[propertyName] or defaultValue
+        local ratio = (currentValue - minValue) / (maxValue - minValue)
+        fill.Size = UDim2.new(ratio, 0, 1, 0)
+        label.Text = propertyName == "WalkSpeed" and "Walk Speed: "..currentValue or "Jump Height: "..currentValue
+    end
+end
+
+-- Initialize sliders
+createSlider(walkSpeedButton, walkSpeedFill, walkSpeedLabel, 16, 100, 16, "WalkSpeed")
+createSlider(jumpHeightButton, jumpHeightFill, jumpHeightLabel, 50, 200, 50, "JumpPower")
+
+-- Reinitialize sliders when character respawns
+player.CharacterAdded:Connect(function(character)
+    character:WaitForChild("Humanoid")
+    createSlider(walkSpeedButton, walkSpeedFill, walkSpeedLabel, 16, 100, 16, "WalkSpeed")
+    createSlider(jumpHeightButton, jumpHeightFill, jumpHeightLabel, 50, 200, 50, "JumpPower")
+end)
+
 -- Infinite Jump Toggle Functionality
 local isInfiniteJumpEnabled = false
 local infiniteJumpConnection
@@ -505,7 +568,7 @@ local function enableInfiniteJump()
     
     infiniteJumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
         if isInfiniteJumpEnabled then
-            local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
             if humanoid then
                 humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
             end
@@ -527,45 +590,13 @@ toggleButton.MouseButton1Click:Connect(function()
 end)
 
 -- Reconnect infinite jump when character respawns
-game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+player.CharacterAdded:Connect(function(character)
     if isInfiniteJumpEnabled then
         enableInfiniteJump()
     end
 end)
 
--- Tab switching functionality
-mainTabButton.MouseButton1Click:Connect(function()
-    settingsPanel.Visible = false
-    userPanel.Visible = false
-    loadstringScrollingFrame.Visible = true
-    createGameDropdowns()
-end)
-
-settingsTabButton.MouseButton1Click:Connect(function()
-    loadstringScrollingFrame.Visible = false
-    userPanel.Visible = false
-    settingsPanel.Visible = true
-end)
-
-userTabButton.MouseButton1Click:Connect(function()
-    loadstringScrollingFrame.Visible = false
-    settingsPanel.Visible = false
-    userPanel.Visible = true
-end)
-
-local settingsPanel = Instance.new("Frame")
-settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
-settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
-settingsPanel.BackgroundTransparency = 1
-settingsPanel.Visible = false
-settingsPanel.Parent = frame2
-
-local settingsLayout = Instance.new("UIListLayout")
-settingsLayout.Padding = UDim.new(0, 10)
-settingsLayout.FillDirection = Enum.FillDirection.Vertical
-settingsLayout.Parent = settingsPanel
-
--- Create Themes dropdown container
+-- Themes Dropdown
 local themesDropdownContainer = Instance.new("Frame")
 themesDropdownContainer.Size = UDim2.new(1, -10, 0, 35)
 themesDropdownContainer.BackgroundTransparency = 1
@@ -699,17 +730,30 @@ themesDropdownButton.MouseButton1Click:Connect(function()
     end
 end)
 
+-- Tab switching functionality
 mainTabButton.MouseButton1Click:Connect(function()
     settingsPanel.Visible = false
+    userPanel.Visible = false
     loadstringScrollingFrame.Visible = true
     createGameDropdowns()
 end)
 
 settingsTabButton.MouseButton1Click:Connect(function()
     loadstringScrollingFrame.Visible = false
+    userPanel.Visible = false
     settingsPanel.Visible = true
 end)
 
+userTabButton.MouseButton1Click:Connect(function()
+    loadstringScrollingFrame.Visible = false
+    settingsPanel.Visible = false
+    userPanel.Visible = true
+end)
+
+-- Initialize with Games tab open
+createGameDropdowns()
+
+-- Dragging functionality
 local dragInput
 local dragStart
 local startPositions = {}
