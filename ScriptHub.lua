@@ -338,7 +338,6 @@ settingsLayout.FillDirection = Enum.FillDirection.Vertical
 settingsLayout.Parent = settingsPanel
 
 -- Create Themes dropdown container
--- Create Themes dropdown container
 local themesDropdownContainer = Instance.new("Frame")
 themesDropdownContainer.Size = UDim2.new(1, -10, 0, 35)
 themesDropdownContainer.BackgroundTransparency = 1
@@ -470,6 +469,17 @@ themesDropdownButton.MouseButton1Click:Connect(function()
         )
         themesArrow.Rotation = 0
     end
+end)
+
+mainTabButton.MouseButton1Click:Connect(function()
+    settingsPanel.Visible = false
+    loadstringScrollingFrame.Visible = true
+    createGameDropdowns()
+end)
+
+settingsTabButton.MouseButton1Click:Connect(function()
+    loadstringScrollingFrame.Visible = false
+    settingsPanel.Visible = true
 end)
 
 local dragInput
