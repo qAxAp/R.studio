@@ -338,6 +338,7 @@ settingsLayout.FillDirection = Enum.FillDirection.Vertical
 settingsLayout.Parent = settingsPanel
 
 -- Create Themes dropdown container
+-- Create Themes dropdown container
 local themesDropdownContainer = Instance.new("Frame")
 themesDropdownContainer.Size = UDim2.new(1, -10, 0, 35)
 themesDropdownContainer.BackgroundTransparency = 1
@@ -437,12 +438,29 @@ for themeName, colors in pairs(themes) do
     end)
 end
 
-local totalThemesHeight = #themes * 35 + (#themes - 1) * 5
+-- Calculate the total height needed for all theme buttons
+themesDropdownContentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    local totalHeight = themesDropdownContentLayout.AbsoluteContentSize.Y
+    if themesDropdownContent.Size.Y.Offset > 0 then
+        themesDropdownContent.Size = UDim2.new(1, 0, 0, totalHeight)
+    end
+end)
 
 -- Toggle themes dropdown
+local isThemesDropdownOpen = false
 themesDropdownButton.MouseButton1Click:Connect(function()
-    local isOpen = themesDropdownContent.Size.Y.Offset > 0
-    if isOpen then
+    isThemesDropdownOpen = not isThemesDropdownOpen
+    
+    if isThemesDropdownOpen then
+        themesDropdownContent:TweenSize(
+            UDim2.new(1, 0, 0, themesDropdownContentLayout.AbsoluteContentSize.Y),
+            Enum.EasingDirection.Out,
+            Enum.EasingStyle.Quad,
+            0.2,
+            true
+        )
+        themesArrow.Rotation = 180
+    else
         themesDropdownContent:TweenSize(
             UDim2.new(1, 0, 0, 0),
             Enum.EasingDirection.Out,
@@ -451,27 +469,7 @@ themesDropdownButton.MouseButton1Click:Connect(function()
             true
         )
         themesArrow.Rotation = 0
-    else
-        themesDropdownContent:TweenSize(
-            UDim2.new(1, 0, 0, totalThemesHeight),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.2,
-            true
-        )
-        themesArrow.Rotation = 180
     end
-end)
-
-mainTabButton.MouseButton1Click:Connect(function()
-    settingsPanel.Visible = false
-    loadstringScrollingFrame.Visible = true
-    createGameDropdowns()
-end)
-
-settingsTabButton.MouseButton1Click:Connect(function()
-    loadstringScrollingFrame.Visible = false
-    settingsPanel.Visible = true
 end)
 
 local dragInput
