@@ -356,6 +356,9 @@ settingsLayout.FillDirection = Enum.FillDirection.Vertical
 settingsLayout.Parent = settingsPanel
 
 -- User Panel (new code)
+-- [Previous code remains the same until the User Panel section]
+
+-- User Panel (updated code)
 local userPanel = Instance.new("Frame")
 userPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 userPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
@@ -364,13 +367,50 @@ userPanel.Visible = false
 userPanel.Parent = frame2
 
 local userLayout = Instance.new("UIListLayout")
-userLayout.Padding = UDim.new(0, 15)
+userLayout.Padding = UDim.new(0, 10) -- Reduced padding between elements
 userLayout.FillDirection = Enum.FillDirection.Vertical
 userLayout.Parent = userPanel
 
+-- Toggle Button (moved to top)
+local toggleContainer = Instance.new("Frame")
+toggleContainer.Size = UDim2.new(1, 0, 0, 30)
+toggleContainer.BackgroundTransparency = 1
+toggleContainer.Parent = userPanel
+
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 20, 0, 20)
+toggleButton.Position = UDim2.new(0, 0, 0, 5)
+toggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+toggleButton.Text = ""
+toggleButton.Parent = toggleContainer
+
+local toggleCorner = Instance.new("UICorner")
+toggleCorner.CornerRadius = UDim.new(0, 4)
+toggleCorner.Parent = toggleButton
+
+local toggleLabel = Instance.new("TextLabel")
+toggleLabel.Size = UDim2.new(1, -25, 1, 0)
+toggleLabel.Position = UDim2.new(0, 25, 0, 0)
+toggleLabel.BackgroundTransparency = 1
+toggleLabel.Text = "Infinite Jump"
+toggleLabel.TextColor3 = Color3.new(1, 1, 1)
+toggleLabel.TextSize = 12
+toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
+toggleLabel.Parent = toggleContainer
+
+-- Speed Section Label
+local speedLabel = Instance.new("TextLabel")
+speedLabel.Size = UDim2.new(1, 0, 0, 20)
+speedLabel.BackgroundTransparency = 1
+speedLabel.Text = "--- Speed ---"
+speedLabel.TextColor3 = Color3.new(1, 1, 1)
+speedLabel.TextSize = 12
+speedLabel.TextXAlignment = Enum.TextXAlignment.Center
+speedLabel.Parent = userPanel
+
 -- Walk Speed Slider
 local walkSpeedContainer = Instance.new("Frame")
-walkSpeedContainer.Size = UDim2.new(1, 0, 0, 60)
+walkSpeedContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
 walkSpeedContainer.BackgroundTransparency = 1
 walkSpeedContainer.Parent = userPanel
 
@@ -407,9 +447,19 @@ walkSpeedButton.BackgroundTransparency = 1
 walkSpeedButton.Text = ""
 walkSpeedButton.Parent = walkSpeedSlider
 
+-- JumpPower Section Label
+local jumpLabel = Instance.new("TextLabel")
+jumpLabel.Size = UDim2.new(1, 0, 0, 20)
+jumpLabel.BackgroundTransparency = 1
+jumpLabel.Text = "--- JumpPower ---"
+jumpLabel.TextColor3 = Color3.new(1, 1, 1)
+jumpLabel.TextSize = 12
+jumpLabel.TextXAlignment = Enum.TextXAlignment.Center
+jumpLabel.Parent = userPanel
+
 -- Jump Height Slider
 local jumpHeightContainer = Instance.new("Frame")
-jumpHeightContainer.Size = UDim2.new(1, 0, 0, 60)
+jumpHeightContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
 jumpHeightContainer.BackgroundTransparency = 1
 jumpHeightContainer.Parent = userPanel
 
@@ -446,103 +496,42 @@ jumpHeightButton.BackgroundTransparency = 1
 jumpHeightButton.Text = ""
 jumpHeightButton.Parent = jumpHeightSlider
 
--- Toggle Button
-local toggleContainer = Instance.new("Frame")
-toggleContainer.Size = UDim2.new(1, 0, 0, 30)
-toggleContainer.BackgroundTransparency = 1
-toggleContainer.Parent = userPanel
+-- Infinite Jump Toggle Functionality
+local isInfiniteJumpEnabled = false
+local infiniteJumpConnection
 
-local toggleButton = Instance.new("TextButton")
-toggleButton.Size = UDim2.new(0, 20, 0, 20)
-toggleButton.Position = UDim2.new(0, 0, 0, 5)
-toggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-toggleButton.Text = ""
-toggleButton.Parent = toggleContainer
-
-local toggleCorner = Instance.new("UICorner")
-toggleCorner.CornerRadius = UDim.new(0, 4)
-toggleCorner.Parent = toggleButton
-
-local toggleLabel = Instance.new("TextLabel")
-toggleLabel.Size = UDim2.new(1, -25, 1, 0)
-toggleLabel.Position = UDim2.new(0, 25, 0, 0)
-toggleLabel.BackgroundTransparency = 1
-toggleLabel.Text = "Toggle Feature"
-toggleLabel.TextColor3 = Color3.new(1, 1, 1)
-toggleLabel.TextSize = 12
-toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
-toggleLabel.Parent = toggleContainer
-
--- Slider functionality
-local function createSlider(sliderButton, fill, label, minValue, maxValue, defaultValue, propertyName)
-    local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if not humanoid then return end
+local function enableInfiniteJump()
+    if infiniteJumpConnection then infiniteJumpConnection:Disconnect() end
     
-    local value = defaultValue
-    local isDragging = false
-    
-    local function updateValue(mouseX)
-        local absoluteSize = sliderButton.AbsoluteSize.X
-        local absolutePosition = sliderButton.AbsolutePosition.X
-        local newX = math.clamp(mouseX - absolutePosition, 0, absoluteSize)
-        local ratio = newX / absoluteSize
-        value = math.floor(minValue + (maxValue - minValue) * ratio)
-        
-        fill.Size = UDim2.new(ratio, 0, 1, 0)
-        label.Text = propertyName..": "..value
-        
-        -- Update the player's property
-        if humanoid then
-            humanoid[propertyName] = value
-        end
-    end
-    
-    sliderButton.MouseButton1Down:Connect(function()
-        isDragging = true
-        updateValue(game:GetService("UserInputService"):GetMouseLocation().X)
-    end)
-    
-    game:GetService("UserInputService").InputChanged:Connect(function(input)
-        if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-            updateValue(input.Position.X)
+    infiniteJumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+        if isInfiniteJumpEnabled then
+            local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
         end
     end)
-    
-    game:GetService("UserInputService").InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 then
-            isDragging = false
-        end
-    end)
-    
-    -- Set default value
-    updateValue(sliderButton.AbsolutePosition.X + (sliderButton.AbsoluteSize.X * ((defaultValue - minValue) / (maxValue - minValue))))
 end
 
--- Toggle functionality
-local isToggled = false
 toggleButton.MouseButton1Click:Connect(function()
-    isToggled = not isToggled
-    if isToggled then
+    isInfiniteJumpEnabled = not isInfiniteJumpEnabled
+    if isInfiniteJumpEnabled then
         toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-        -- Add your toggle functionality here
+        enableInfiniteJump()
     else
         toggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        -- Add your toggle off functionality here
+        if infiniteJumpConnection then
+            infiniteJumpConnection:Disconnect()
+        end
     end
 end)
 
--- Initialize sliders when character is added
+-- Reconnect infinite jump when character respawns
 game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
-    character:WaitForChild("Humanoid")
-    createSlider(walkSpeedButton, walkSpeedFill, walkSpeedLabel, 16, 100, 16, "WalkSpeed")
-    createSlider(jumpHeightButton, jumpHeightFill, jumpHeightLabel, 50, 200, 50, "JumpPower")
+    if isInfiniteJumpEnabled then
+        enableInfiniteJump()
+    end
 end)
-
--- Initialize sliders if character already exists
-if game.Players.LocalPlayer.Character then
-    createSlider(walkSpeedButton, walkSpeedFill, walkSpeedLabel, 16, 100, 16, "WalkSpeed")
-    createSlider(jumpHeightButton, jumpHeightFill, jumpHeightLabel, 50, 200, 50, "JumpPower")
-end
 
 -- Tab switching functionality
 mainTabButton.MouseButton1Click:Connect(function()
