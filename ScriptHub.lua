@@ -1,5 +1,7 @@
-local player = game.Players.LocalPlayer
+local player = game:GetService("Players").LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
+local tweenService = game:GetService("TweenService")
+local userInputService = game:GetService("UserInputService")
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = playerGui
@@ -33,69 +35,44 @@ frame4.BackgroundColor3 = Color3.new(0.059, 0.059, 0.059)
 frame4.BorderSizePixel = 0
 frame4.Parent = screenGui
 
-local corner1 = Instance.new("UICorner")
-corner1.CornerRadius = UDim.new(0, 6) 
-corner1.Parent = frame1
+local corner1 = Instance.new("UICorner", frame1)
+corner1.CornerRadius = UDim.new(0, 6)
+local corner2 = Instance.new("UICorner", frame2)
+corner2.CornerRadius = UDim.new(0, 6)
+local corner3 = Instance.new("UICorner", frame3)
+corner3.CornerRadius = UDim.new(0, 6)
+local corner4 = Instance.new("UICorner", frame4)
+corner4.CornerRadius = UDim.new(0, 2)
 
-local corner2 = Instance.new("UICorner")
-corner2.CornerRadius = UDim.new(0, 6) 
-corner2.Parent = frame2
-
-local corner3 = Instance.new("UICorner")
-corner3.CornerRadius = UDim.new(0, 6) 
-corner3.Parent = frame3
-
-local corner4 = Instance.new("UICorner")
-corner4.CornerRadius = UDim.new(0, 2) 
-corner4.Parent = frame4
-
-local closeButton = Instance.new("TextButton")
+local closeButton = Instance.new("TextButton", frame3)
 closeButton.Size = UDim2.new(0, 15, 0, 15)
 closeButton.Position = UDim2.new(0.95, 0, 0.5, -7.5)
 closeButton.BackgroundColor3 = Color3.new(1, 0, 0)
 closeButton.Text = ""
-closeButton.Parent = frame3
+Instance.new("UICorner", closeButton).CornerRadius = UDim.new(1, 0)
 
-local closeCorner = Instance.new("UICorner")
-closeCorner.CornerRadius = UDim.new(1, 0)
-closeCorner.Parent = closeButton
-
-local minimizeButton = Instance.new("TextButton")
+local minimizeButton = Instance.new("TextButton", frame3)
 minimizeButton.Size = UDim2.new(0, 15, 0, 15)
 minimizeButton.Position = UDim2.new(0.9, 0, 0.5, -7.5)
 minimizeButton.BackgroundColor3 = Color3.new(1, 1, 0)
 minimizeButton.Text = ""
-minimizeButton.Parent = frame3
+Instance.new("UICorner", minimizeButton).CornerRadius = UDim.new(1, 0)
 
-local minimizeCorner = Instance.new("UICorner")
-minimizeCorner.CornerRadius = UDim.new(1, 0)
-minimizeCorner.Parent = minimizeButton
-
-local tabsScrollingFrame = Instance.new("ScrollingFrame")
+local tabsScrollingFrame = Instance.new("ScrollingFrame", frame4)
 tabsScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 tabsScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
 tabsScrollingFrame.BackgroundTransparency = 1
 tabsScrollingFrame.ScrollBarThickness = 5
 tabsScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-tabsScrollingFrame.Parent = frame4
+Instance.new("UIListLayout", tabsScrollingFrame).FillDirection = Enum.FillDirection.Vertical
 
-local tabsLayout = Instance.new("UIListLayout")
-tabsLayout.FillDirection = Enum.FillDirection.Vertical
-tabsLayout.Padding = UDim.new(0, 5)
-tabsLayout.Parent = tabsScrollingFrame
-
-local loadstringScrollingFrame = Instance.new("ScrollingFrame")
+local loadstringScrollingFrame = Instance.new("ScrollingFrame", frame2)
 loadstringScrollingFrame.Size = UDim2.new(0.9, 0, 0.9, 0)
 loadstringScrollingFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
 loadstringScrollingFrame.BackgroundTransparency = 1
 loadstringScrollingFrame.ScrollBarThickness = 5
 loadstringScrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
-loadstringScrollingFrame.Parent = frame2
-
-local loadstringLayout = Instance.new("UIListLayout")
-loadstringLayout.FillDirection = Enum.FillDirection.Vertical
-loadstringLayout.Padding = UDim.new(0, 5)
-loadstringLayout.Parent = loadstringScrollingFrame
+Instance.new("UIListLayout", loadstringScrollingFrame).FillDirection = Enum.FillDirection.Vertical
 
 local gameScripts = {
     ["Blox Fruits"] = {
@@ -168,6 +145,7 @@ local gameScripts = {
     }
 }
 
+
 local function createGameDropdowns()
     for _, child in ipairs(loadstringScrollingFrame:GetChildren()) do
         if child:IsA("TextButton") or child:IsA("Frame") then
@@ -175,67 +153,57 @@ local function createGameDropdowns()
         end
     end
 
-    local gameNames = {
-        "Blox Fruits", "Brookhaven RP", "Pet Simulator 99", 
-        "Arsenal", "Murder Mystery 2", "Tower of Hell", 
-        "Adopt Me!", "BedWars", "Rainbow Friends", "Universal"
-    }
-
     local allDropdowns = {}
 
-    for _, gameName in ipairs(gameNames) do
-        local dropdownContainer = Instance.new("Frame")
+    for gameName, scripts in pairs(gameScripts) do
+        local dropdownContainer = Instance.new("Frame", loadstringScrollingFrame)
         dropdownContainer.Size = UDim2.new(1, -10, 0, 35)
         dropdownContainer.BackgroundTransparency = 1
-        dropdownContainer.Parent = loadstringScrollingFrame
+        dropdownContainer.ZIndex = 2  
         table.insert(allDropdowns, dropdownContainer)
 
-        local dropdownButton = Instance.new("TextButton")
+        local dropdownButton = Instance.new("TextButton", dropdownContainer)
         dropdownButton.Size = UDim2.new(1, 0, 1, 0)
         dropdownButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
         dropdownButton.Text = "  "..gameName
         dropdownButton.TextColor3 = Color3.new(1, 1, 1)
         dropdownButton.TextSize = 12
         dropdownButton.TextXAlignment = Enum.TextXAlignment.Left
-        dropdownButton.ZIndex = 2
-        dropdownButton.Parent = dropdownContainer
+        dropdownButton.ZIndex = 3  
+        Instance.new("UICorner", dropdownButton).CornerRadius = UDim.new(0, 4)
 
-        local dropdownCorner = Instance.new("UICorner")
-        dropdownCorner.CornerRadius = UDim.new(0, 4)
-        dropdownCorner.Parent = dropdownButton
-
-        local arrow = Instance.new("ImageLabel")
+        local arrow = Instance.new("ImageLabel", dropdownButton)
         arrow.Name = "Arrow"
         arrow.Size = UDim2.new(0, 12, 0, 12)
         arrow.Position = UDim2.new(1, -25, 0.5, -6)
         arrow.BackgroundTransparency = 1
         arrow.Image = "rbxassetid://71659683"
         arrow.ImageColor3 = Color3.new(1, 1, 1)
-        arrow.ZIndex = 2
-        arrow.Parent = dropdownButton
+        arrow.ZIndex = 4  
 
-        local dropdownContent = Instance.new("Frame")
+        local dropdownContent = Instance.new("Frame", dropdownContainer)
         dropdownContent.Name = "DropdownContent"
         dropdownContent.Size = UDim2.new(1, 0, 0, 0)
         dropdownContent.Position = UDim2.new(0, 0, 1, 5)
         dropdownContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
         dropdownContent.BorderSizePixel = 0
         dropdownContent.ClipsDescendants = true
-        dropdownContent.ZIndex = 3
-        dropdownContent.Parent = dropdownContainer
+        dropdownContent.ZIndex = 5  
+        Instance.new("UICorner", dropdownContent).CornerRadius = UDim.new(0, 4)
+        
+        local layout = Instance.new("UIListLayout", dropdownContent)
+        layout.FillDirection = Enum.FillDirection.Vertical
+        layout.Padding = UDim.new(0, 5)
 
-        local dropdownContentCorner = Instance.new("UICorner")
-        dropdownContentCorner.CornerRadius = UDim.new(0, 4)
-        dropdownContentCorner.Parent = dropdownContent
+        
+        layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+            if dropdownContent.Size.Y.Offset > 0 then
+                dropdownContent.Size = UDim2.new(1, 0, 0, layout.AbsoluteContentSize.Y)
+            end
+        end)
 
-        local dropdownContentLayout = Instance.new("UIListLayout")
-        dropdownContentLayout.FillDirection = Enum.FillDirection.Vertical
-        dropdownContentLayout.Padding = UDim.new(0, 5)
-        dropdownContentLayout.Parent = dropdownContent
-
-        local scripts = gameScripts[gameName] or {}
         for _, scriptData in ipairs(scripts) do
-            local scriptButton = Instance.new("TextButton")
+            local scriptButton = Instance.new("TextButton", dropdownContent)
             scriptButton.Size = UDim2.new(1, -10, 0, 30)
             scriptButton.Position = UDim2.new(0, 5, 0, 0)
             scriptButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
@@ -243,19 +211,13 @@ local function createGameDropdowns()
             scriptButton.TextColor3 = Color3.new(1, 1, 1)
             scriptButton.TextSize = 11
             scriptButton.TextXAlignment = Enum.TextXAlignment.Left
-            scriptButton.ZIndex = 4
-            scriptButton.Parent = dropdownContent
-
-            local scriptButtonCorner = Instance.new("UICorner")
-            scriptButtonCorner.CornerRadius = UDim.new(0, 4)
-            scriptButtonCorner.Parent = scriptButton
+            scriptButton.ZIndex = 6  
+            Instance.new("UICorner", scriptButton).CornerRadius = UDim.new(0, 4)
 
             scriptButton.MouseButton1Click:Connect(function()
                 loadstring(scriptData.Script)()
             end)
         end
-
-        local totalHeight = #scripts * 35 + (#scripts - 1) * 5
 
         dropdownButton.MouseButton1Click:Connect(function()
             for _, otherDropdown in ipairs(allDropdowns) do
@@ -264,131 +226,69 @@ local function createGameDropdowns()
                     if content then
                         content.Size = UDim2.new(1, 0, 0, 0)
                         local arrow = otherDropdown:FindFirstChild("Arrow", true)
-                        if arrow then
-                            arrow.Rotation = 0
-                        end
+                        if arrow then arrow.Rotation = 0 end
                     end
                 end
             end
 
             local isOpen = dropdownContent.Size.Y.Offset > 0
-            if isOpen then
-                dropdownContent:TweenSize(
-                    UDim2.new(1, 0, 0, 0),
-                    Enum.EasingDirection.Out,
-                    Enum.EasingStyle.Quad,
-                    0.2,
-                    true
-                )
-                arrow.Rotation = 0
-            else
-                dropdownContent:TweenSize(
-                    UDim2.new(1, 0, 0, totalHeight),
-                    Enum.EasingDirection.Out,
-                    Enum.EasingStyle.Quad,
-                    0.2,
-                    true
-                )
-                arrow.Rotation = 180
-            end
+            local targetHeight = isOpen and 0 or layout.AbsoluteContentSize.Y
+            
+            dropdownContent:TweenSize(
+                UDim2.new(1, 0, 0, targetHeight),
+                Enum.EasingDirection.Out,
+                Enum.EasingStyle.Quad,
+                0.2,
+                true
+            )
+            arrow.Rotation = isOpen and 0 or 180
         end)
     end
 end
 
--- [Previous code remains the same until the tabs section]
+local function createTab(name)
+    local tab = Instance.new("TextButton", tabsScrollingFrame)
+    tab.Size = UDim2.new(1, -5, 0, 30)
+    tab.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+    tab.Text = name
+    tab.TextColor3 = Color3.new(1, 1, 1)
+    tab.TextSize = 12
+    Instance.new("UICorner", tab).CornerRadius = UDim.new(0, 4)
+    return tab
+end
 
-local mainTabButton = Instance.new("TextButton")
-mainTabButton.Size = UDim2.new(1, -5, 0, 30)
-mainTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-mainTabButton.Text = "Games"
-mainTabButton.TextColor3 = Color3.new(1, 1, 1)
-mainTabButton.TextSize = 12
-mainTabButton.Parent = tabsScrollingFrame
+local mainTabButton = createTab("Games")
+local settingsTabButton = createTab("Settings")
+local userTabButton = createTab("User")
 
-local tabCorner = Instance.new("UICorner")
-tabCorner.CornerRadius = UDim.new(0, 4)
-tabCorner.Parent = mainTabButton
-
-mainTabButton.MouseButton1Click:Connect(function()
-    settingsPanel.Visible = false
-    userPanel.Visible = false
-    loadstringScrollingFrame.Visible = true
-    createGameDropdowns()
-end)
-
-createGameDropdowns()
-
-local settingsTabButton = Instance.new("TextButton")
-settingsTabButton.Size = UDim2.new(1, -5, 0, 30)
-settingsTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-settingsTabButton.Text = "Settings"
-settingsTabButton.TextColor3 = Color3.new(1, 1, 1)
-settingsTabButton.TextSize = 12
-settingsTabButton.Parent = tabsScrollingFrame
-
-local settingsCorner = Instance.new("UICorner")
-settingsCorner.CornerRadius = UDim.new(0, 4)
-settingsCorner.Parent = settingsTabButton
-
-local userTabButton = Instance.new("TextButton")
-userTabButton.Size = UDim2.new(1, -5, 0, 30)
-userTabButton.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
-userTabButton.Text = "User"
-userTabButton.TextColor3 = Color3.new(1, 1, 1)
-userTabButton.TextSize = 12
-userTabButton.Parent = tabsScrollingFrame
-
-local userCorner = Instance.new("UICorner")
-userCorner.CornerRadius = UDim.new(0, 4)
-userCorner.Parent = userTabButton
-
--- Settings Panel (existing code)
-local settingsPanel = Instance.new("Frame")
+local settingsPanel = Instance.new("Frame", frame2)
 settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
 settingsPanel.BackgroundTransparency = 1
 settingsPanel.Visible = false
-settingsPanel.Parent = frame2
+Instance.new("UIListLayout", settingsPanel).FillDirection = Enum.FillDirection.Vertical
 
-local settingsLayout = Instance.new("UIListLayout")
-settingsLayout.Padding = UDim.new(0, 10)
-settingsLayout.FillDirection = Enum.FillDirection.Vertical
-settingsLayout.Parent = settingsPanel
-
--- User Panel (new code)
--- [Previous code remains the same until the User Panel section]
-
--- User Panel (updated code)
-local userPanel = Instance.new("Frame")
+local userPanel = Instance.new("Frame", frame2)
 userPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
 userPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
 userPanel.BackgroundTransparency = 1
 userPanel.Visible = false
-userPanel.Parent = frame2
-
-local userLayout = Instance.new("UIListLayout")
-userLayout.Padding = UDim.new(0, 10) -- Reduced padding between elements
+local userLayout = Instance.new("UIListLayout", userPanel)
 userLayout.FillDirection = Enum.FillDirection.Vertical
-userLayout.Parent = userPanel
+userLayout.Padding = UDim.new(0, 10)
 
--- Toggle Button (moved to top)
-local toggleContainer = Instance.new("Frame")
+local toggleContainer = Instance.new("Frame", userPanel)
 toggleContainer.Size = UDim2.new(1, 0, 0, 30)
 toggleContainer.BackgroundTransparency = 1
-toggleContainer.Parent = userPanel
 
-local toggleButton = Instance.new("TextButton")
+local toggleButton = Instance.new("TextButton", toggleContainer)
 toggleButton.Size = UDim2.new(0, 20, 0, 20)
 toggleButton.Position = UDim2.new(0, 0, 0, 5)
 toggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 toggleButton.Text = ""
-toggleButton.Parent = toggleContainer
+Instance.new("UICorner", toggleButton).CornerRadius = UDim.new(0, 4)
 
-local toggleCorner = Instance.new("UICorner")
-toggleCorner.CornerRadius = UDim.new(0, 4)
-toggleCorner.Parent = toggleButton
-
-local toggleLabel = Instance.new("TextLabel")
+local toggleLabel = Instance.new("TextLabel", toggleContainer)
 toggleLabel.Size = UDim2.new(1, -25, 1, 0)
 toggleLabel.Position = UDim2.new(0, 25, 0, 0)
 toggleLabel.BackgroundTransparency = 1
@@ -396,116 +296,120 @@ toggleLabel.Text = "Infinite Jump"
 toggleLabel.TextColor3 = Color3.new(1, 1, 1)
 toggleLabel.TextSize = 12
 toggleLabel.TextXAlignment = Enum.TextXAlignment.Left
-toggleLabel.Parent = toggleContainer
 
--- Speed Section Label
-local speedLabel = Instance.new("TextLabel")
+local function createSlider(parent, name, min, max, default, property)
+    local container = Instance.new("Frame", parent)
+    container.Size = UDim2.new(1, 0, 0, 60)  
+    container.BackgroundTransparency = 1
+    
+    local label = Instance.new("TextLabel", container)
+    label.Size = UDim2.new(1, 0, 0, 20)
+    label.Position = UDim2.new(0, 0, 0, 0)  
+    label.BackgroundTransparency = 1
+    label.Text = name..": "..default
+    label.TextColor3 = Color3.new(1, 1, 1)
+    label.TextSize = 12
+    label.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local slider = Instance.new("Frame", container)
+    slider.Size = UDim2.new(1, 0, 0, 20)
+    slider.Position = UDim2.new(0, 0, 0, 25)  
+    slider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+    Instance.new("UICorner", slider).CornerRadius = UDim.new(0, 4)
+
+    local fill = Instance.new("Frame", slider)
+    fill.Size = UDim2.new((default - min) / (max - min), 0, 1, 0)
+    fill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+    Instance.new("UICorner", fill).CornerRadius = UDim.new(0, 4)
+
+    local button = Instance.new("TextButton", slider)
+    button.Size = UDim2.new(1, 0, 1, 0)
+    button.BackgroundTransparency = 1
+    button.Text = ""
+
+    local currentValue = default
+    local isDragging = false
+
+    local function setValue(value)
+        currentValue = math.clamp(math.floor(value), min, max)
+        local percentage = (currentValue - min) / (max - min)
+        tweenService:Create(fill, TweenInfo.new(0.1), {Size = UDim2.new(percentage, 0, 1, 0)}):Play()
+        label.Text = name..": "..currentValue
+        
+        local character = player.Character
+        if character and character:FindFirstChildOfClass("Humanoid") then
+            character:FindFirstChildOfClass("Humanoid")[property] = currentValue
+        end
+    end
+
+    button.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            isDragging = true
+            local sliderAbsPos = slider.AbsolutePosition.X
+            local sliderAbsSize = slider.AbsoluteSize.X
+            local inputX = input.UserInputType == Enum.UserInputType.Touch and input.Position.X or input.Position.X
+            local mouseX = math.clamp(inputX, sliderAbsPos, sliderAbsPos + sliderAbsSize)
+            local percentage = (mouseX - sliderAbsPos) / sliderAbsSize
+            setValue(min + (max - min) * percentage)
+        end
+    end)
+
+    userInputService.InputChanged:Connect(function(input)
+        if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or 
+                          input.UserInputType == Enum.UserInputType.Touch) then
+            local sliderAbsPos = slider.AbsolutePosition.X
+            local sliderAbsSize = slider.AbsoluteSize.X
+            local inputX = input.UserInputType == Enum.UserInputType.Touch and input.Position.X or input.Position.X
+            local mouseX = math.clamp(inputX, sliderAbsPos, sliderAbsPos + sliderAbsSize)
+            local percentage = (mouseX - sliderAbsPos) / sliderAbsSize
+            setValue(min + (max - min) * percentage)
+        end
+    end)
+
+    userInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+           input.UserInputType == Enum.UserInputType.Touch then
+            isDragging = false
+        end
+    end)
+
+    player.CharacterAdded:Connect(function(character)
+        local humanoid = character:WaitForChildOfClass("Humanoid")
+        humanoid[property] = currentValue
+    end)
+end
+
+local speedLabel = Instance.new("TextLabel", userPanel)
 speedLabel.Size = UDim2.new(1, 0, 0, 20)
+speedLabel.Position = UDim2.new(0, 0, 0, 0)  
 speedLabel.BackgroundTransparency = 1
-speedLabel.Text = "--- Speed ---"
+speedLabel.Text = ""
 speedLabel.TextColor3 = Color3.new(1, 1, 1)
 speedLabel.TextSize = 12
 speedLabel.TextXAlignment = Enum.TextXAlignment.Center
-speedLabel.Parent = userPanel
 
--- Walk Speed Slider
-local walkSpeedContainer = Instance.new("Frame")
-walkSpeedContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
-walkSpeedContainer.BackgroundTransparency = 1
-walkSpeedContainer.Parent = userPanel
+createSlider(userPanel, "Walk Speed", 16, 50, 16, "WalkSpeed")
 
-local walkSpeedLabel = Instance.new("TextLabel")
-walkSpeedLabel.Size = UDim2.new(1, 0, 0, 20)
-walkSpeedLabel.BackgroundTransparency = 1
-walkSpeedLabel.Text = "Walk Speed: 16"
-walkSpeedLabel.TextColor3 = Color3.new(1, 1, 1)
-walkSpeedLabel.TextSize = 12
-walkSpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
-walkSpeedLabel.Parent = walkSpeedContainer
-
-local walkSpeedSlider = Instance.new("Frame")
-walkSpeedSlider.Size = UDim2.new(1, 0, 0, 20)
-walkSpeedSlider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-walkSpeedSlider.Parent = walkSpeedContainer
-
-local walkSpeedSliderCorner = Instance.new("UICorner")
-walkSpeedSliderCorner.CornerRadius = UDim.new(0, 4)
-walkSpeedSliderCorner.Parent = walkSpeedSlider
-
-local walkSpeedFill = Instance.new("Frame")
-walkSpeedFill.Size = UDim2.new(0, 0, 1, 0)
-walkSpeedFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-walkSpeedFill.Parent = walkSpeedSlider
-
-local walkSpeedFillCorner = Instance.new("UICorner")
-walkSpeedFillCorner.CornerRadius = UDim.new(0, 4)
-walkSpeedFillCorner.Parent = walkSpeedFill
-
-local walkSpeedButton = Instance.new("TextButton")
-walkSpeedButton.Size = UDim2.new(1, 0, 1, 0)
-walkSpeedButton.BackgroundTransparency = 1
-walkSpeedButton.Text = ""
-walkSpeedButton.Parent = walkSpeedSlider
-
--- JumpPower Section Label
-local jumpLabel = Instance.new("TextLabel")
+local jumpLabel = Instance.new("TextLabel", userPanel)
 jumpLabel.Size = UDim2.new(1, 0, 0, 20)
-jumpLabel.BackgroundTransparency = 1
-jumpLabel.Text = "--- JumpPower ---"
+jumpLabel.Position = UDim2.new(0, 0, 0, 60) 
+speedLabel.BackgroundTransparency = 1
+jumpLabel.Text = ""
 jumpLabel.TextColor3 = Color3.new(1, 1, 1)
 jumpLabel.TextSize = 12
 jumpLabel.TextXAlignment = Enum.TextXAlignment.Center
-jumpLabel.Parent = userPanel
 
--- Jump Height Slider
-local jumpHeightContainer = Instance.new("Frame")
-jumpHeightContainer.Size = UDim2.new(1, 0, 0, 50) -- Reduced height
-jumpHeightContainer.BackgroundTransparency = 1
-jumpHeightContainer.Parent = userPanel
+createSlider(userPanel, "Jump Height", 50, 200, 50, "JumpPower")
 
-local jumpHeightLabel = Instance.new("TextLabel")
-jumpHeightLabel.Size = UDim2.new(1, 0, 0, 20)
-jumpHeightLabel.BackgroundTransparency = 1
-jumpHeightLabel.Text = "Jump Height: 50"
-jumpHeightLabel.TextColor3 = Color3.new(1, 1, 1)
-jumpHeightLabel.TextSize = 12
-jumpHeightLabel.TextXAlignment = Enum.TextXAlignment.Left
-jumpHeightLabel.Parent = jumpHeightContainer
-
-local jumpHeightSlider = Instance.new("Frame")
-jumpHeightSlider.Size = UDim2.new(1, 0, 0, 20)
-jumpHeightSlider.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-jumpHeightSlider.Parent = jumpHeightContainer
-
-local jumpHeightSliderCorner = Instance.new("UICorner")
-jumpHeightSliderCorner.CornerRadius = UDim.new(0, 4)
-jumpHeightSliderCorner.Parent = jumpHeightSlider
-
-local jumpHeightFill = Instance.new("Frame")
-jumpHeightFill.Size = UDim2.new(0, 0, 1, 0)
-jumpHeightFill.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
-jumpHeightFill.Parent = jumpHeightSlider
-
-local jumpHeightFillCorner = Instance.new("UICorner")
-jumpHeightFillCorner.CornerRadius = UDim.new(0, 4)
-jumpHeightFillCorner.Parent = jumpHeightFill
-
-local jumpHeightButton = Instance.new("TextButton")
-jumpHeightButton.Size = UDim2.new(1, 0, 1, 0)
-jumpHeightButton.BackgroundTransparency = 1
-jumpHeightButton.Text = ""
-jumpHeightButton.Parent = jumpHeightSlider
-
--- Infinite Jump Toggle Functionality
 local isInfiniteJumpEnabled = false
 local infiniteJumpConnection
 
 local function enableInfiniteJump()
     if infiniteJumpConnection then infiniteJumpConnection:Disconnect() end
-    
-    infiniteJumpConnection = game:GetService("UserInputService").JumpRequest:Connect(function()
+    infiniteJumpConnection = userInputService.JumpRequest:Connect(function()
         if isInfiniteJumpEnabled then
-            local humanoid = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
             if humanoid then
                 humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
             end
@@ -515,25 +419,18 @@ end
 
 toggleButton.MouseButton1Click:Connect(function()
     isInfiniteJumpEnabled = not isInfiniteJumpEnabled
+    toggleButton.BackgroundColor3 = isInfiniteJumpEnabled and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(45, 45, 45)
     if isInfiniteJumpEnabled then
-        toggleButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
         enableInfiniteJump()
-    else
-        toggleButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-        if infiniteJumpConnection then
-            infiniteJumpConnection:Disconnect()
-        end
+    elseif infiniteJumpConnection then
+        infiniteJumpConnection:Disconnect()
     end
 end)
 
--- Reconnect infinite jump when character respawns
-game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
-    if isInfiniteJumpEnabled then
-        enableInfiniteJump()
-    end
+player.CharacterAdded:Connect(function()
+    if isInfiniteJumpEnabled then enableInfiniteJump() end
 end)
 
--- Tab switching functionality
 mainTabButton.MouseButton1Click:Connect(function()
     settingsPanel.Visible = false
     userPanel.Visible = false
@@ -553,65 +450,39 @@ userTabButton.MouseButton1Click:Connect(function()
     userPanel.Visible = true
 end)
 
-local settingsPanel = Instance.new("Frame")
-settingsPanel.Size = UDim2.new(0.9, 0, 0.9, 0)
-settingsPanel.Position = UDim2.new(0.05, 0, 0.05, 0)
-settingsPanel.BackgroundTransparency = 1
-settingsPanel.Visible = false
-settingsPanel.Parent = frame2
-
-local settingsLayout = Instance.new("UIListLayout")
-settingsLayout.Padding = UDim.new(0, 10) 
-settingsLayout.FillDirection = Enum.FillDirection.Vertical
-settingsLayout.Parent = settingsPanel
-
-local themesDropdownContainer = Instance.new("Frame")
+local themesDropdownContainer = Instance.new("Frame", settingsPanel)
 themesDropdownContainer.Size = UDim2.new(1, -10, 0, 35)
 themesDropdownContainer.BackgroundTransparency = 1
-themesDropdownContainer.Parent = settingsPanel
 
-local themesDropdownButton = Instance.new("TextButton")
+local themesDropdownButton = Instance.new("TextButton", themesDropdownContainer)
 themesDropdownButton.Size = UDim2.new(1, 0, 1, 0)
 themesDropdownButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 themesDropdownButton.Text = "  Themes"
 themesDropdownButton.TextColor3 = Color3.new(1, 1, 1)
 themesDropdownButton.TextSize = 12
 themesDropdownButton.TextXAlignment = Enum.TextXAlignment.Left
-themesDropdownButton.ZIndex = 2
-themesDropdownButton.Parent = themesDropdownContainer
+Instance.new("UICorner", themesDropdownButton).CornerRadius = UDim.new(0, 4)
 
-local themesDropdownCorner = Instance.new("UICorner")
-themesDropdownCorner.CornerRadius = UDim.new(0, 4)
-themesDropdownCorner.Parent = themesDropdownButton
-
-local themesArrow = Instance.new("ImageLabel")
+local themesArrow = Instance.new("ImageLabel", themesDropdownButton)
 themesArrow.Name = "Arrow"
 themesArrow.Size = UDim2.new(0, 12, 0, 12)
 themesArrow.Position = UDim2.new(1, -25, 0.5, -6)
 themesArrow.BackgroundTransparency = 1
 themesArrow.Image = "rbxassetid://71659683"
 themesArrow.ImageColor3 = Color3.new(1, 1, 1)
-themesArrow.ZIndex = 2
-themesArrow.Parent = themesDropdownButton
 
-local themesDropdownContent = Instance.new("Frame")
+local themesDropdownContent = Instance.new("Frame", themesDropdownContainer)
 themesDropdownContent.Name = "DropdownContent"
 themesDropdownContent.Size = UDim2.new(1, 0, 0, 0)
 themesDropdownContent.Position = UDim2.new(0, 0, 1, 5)
 themesDropdownContent.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 themesDropdownContent.BorderSizePixel = 0
 themesDropdownContent.ClipsDescendants = true
-themesDropdownContent.ZIndex = 3
-themesDropdownContent.Parent = themesDropdownContainer
+Instance.new("UICorner", themesDropdownContent).CornerRadius = UDim.new(0, 4)
 
-local themesDropdownContentCorner = Instance.new("UICorner")
-themesDropdownContentCorner.CornerRadius = UDim.new(0, 4)
-themesDropdownContentCorner.Parent = themesDropdownContent
-
-local themesDropdownContentLayout = Instance.new("UIListLayout")
-themesDropdownContentLayout.FillDirection = Enum.FillDirection.Vertical
-themesDropdownContentLayout.Padding = UDim.new(0, 5)
-themesDropdownContentLayout.Parent = themesDropdownContent
+local themesLayout = Instance.new("UIListLayout", themesDropdownContent)
+themesLayout.FillDirection = Enum.FillDirection.Vertical
+themesLayout.Padding = UDim.new(0, 5)
 
 local themes = {
     ["White"] = {
@@ -640,21 +511,15 @@ local themes = {
     },
 }
 
--- Create theme buttons inside the dropdown
 for themeName, colors in pairs(themes) do
-    local themeButton = Instance.new("TextButton")
+    local themeButton = Instance.new("TextButton", themesDropdownContent)
     themeButton.Size = UDim2.new(1, -10, 0, 30)
     themeButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
     themeButton.Text = "  "..themeName
     themeButton.TextColor3 = Color3.new(1, 1, 1)
     themeButton.TextSize = 11
     themeButton.TextXAlignment = Enum.TextXAlignment.Left
-    themeButton.ZIndex = 4
-    themeButton.Parent = themesDropdownContent
-
-    local themeButtonCorner = Instance.new("UICorner")
-    themeButtonCorner.CornerRadius = UDim.new(0, 4)
-    themeButtonCorner.Parent = themeButton
+    Instance.new("UICorner", themeButton).CornerRadius = UDim.new(0, 4)
 
     themeButton.MouseButton1Click:Connect(function()
         frame1.BackgroundColor3 = colors.Main
@@ -664,129 +529,64 @@ for themeName, colors in pairs(themes) do
     end)
 end
 
--- Calculate the total height needed for all theme buttons
-themesDropdownContentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-    local totalHeight = themesDropdownContentLayout.AbsoluteContentSize.Y
+themesLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     if themesDropdownContent.Size.Y.Offset > 0 then
-        themesDropdownContent.Size = UDim2.new(1, 0, 0, totalHeight)
+        themesDropdownContent.Size = UDim2.new(1, 0, 0, themesLayout.AbsoluteContentSize.Y)
     end
 end)
 
--- Toggle themes dropdown
 local isThemesDropdownOpen = false
 themesDropdownButton.MouseButton1Click:Connect(function()
     isThemesDropdownOpen = not isThemesDropdownOpen
-    
-    if isThemesDropdownOpen then
-        themesDropdownContent:TweenSize(
-            UDim2.new(1, 0, 0, themesDropdownContentLayout.AbsoluteContentSize.Y),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.2,
-            true
-        )
-        themesArrow.Rotation = 180
-    else
-        themesDropdownContent:TweenSize(
-            UDim2.new(1, 0, 0, 0),
-            Enum.EasingDirection.Out,
-            Enum.EasingStyle.Quad,
-            0.2,
-            true
-        )
-        themesArrow.Rotation = 0
-    end
+    themesDropdownContent:TweenSize(
+        UDim2.new(1, 0, 0, isThemesDropdownOpen and themesLayout.AbsoluteContentSize.Y or 0),
+        Enum.EasingDirection.Out,
+        Enum.EasingStyle.Quad,
+        0.2,
+        true
+    )
+    themesArrow.Rotation = isThemesDropdownOpen and 180 or 0
 end)
 
-mainTabButton.MouseButton1Click:Connect(function()
-    settingsPanel.Visible = false
-    loadstringScrollingFrame.Visible = true
-    createGameDropdowns()
-end)
-
-settingsTabButton.MouseButton1Click:Connect(function()
-    loadstringScrollingFrame.Visible = false
-    settingsPanel.Visible = true
-end)
-
-local dragInput
-local dragStart
-local startPositions = {}
+local dragInput, dragStart, startPos
 local isDragging = false
 
-local function updatePositions(delta)
-    frame1.Position = UDim2.new(
-        startPositions.frame1.X.Scale,
-        startPositions.frame1.X.Offset + delta.X,
-        startPositions.frame1.Y.Scale,
-        startPositions.frame1.Y.Offset + delta.Y
-    )
-    frame2.Position = UDim2.new(
-        startPositions.frame2.X.Scale,
-        startPositions.frame2.X.Offset + delta.X,
-        startPositions.frame2.Y.Scale,
-        startPositions.frame2.Y.Offset + delta.Y
-    )
-    frame3.Position = UDim2.new(
-        startPositions.frame3.X.Scale,
-        startPositions.frame3.X.Offset + delta.X,
-        startPositions.frame3.Y.Scale,
-        startPositions.frame3.Y.Offset + delta.Y
-    )
-    frame4.Position = UDim2.new(
-        startPositions.frame4.X.Scale,
-        startPositions.frame4.X.Offset + delta.X,
-        startPositions.frame4.Y.Scale,
-        startPositions.frame4.Y.Offset + delta.Y
-    )
-end
-
-local function onInputBegan(input)
-    if input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseButton1 then
+frame3.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
         dragStart = input.Position
-        startPositions = {
+        startPos = {
             frame1 = frame1.Position,
             frame2 = frame2.Position,
             frame3 = frame3.Position,
             frame4 = frame4.Position
         }
         isDragging = true
-
-        local connection
-        connection = input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                isDragging = false
-                connection:Disconnect()
-            end
-        end)
     end
-end
+end)
 
-local function onInputChanged(input)
-    if isDragging and (input.UserInputType == Enum.UserInputType.Touch or input.UserInputType == Enum.UserInputType.MouseMovement) then
-        dragInput = input
-    end
-end
-
-frame3.InputBegan:Connect(onInputBegan)
-frame3.InputChanged:Connect(onInputChanged)
-
-game:GetService("UserInputService").InputChanged:Connect(function(input)
-    if isDragging and input == dragInput and dragStart then
+userInputService.InputChanged:Connect(function(input)
+    if isDragging and (input == dragInput or input.UserInputType == Enum.UserInputType.Touch) and dragStart then
         local delta = input.Position - dragStart
-        updatePositions(delta)
+        frame1.Position = UDim2.new(startPos.frame1.X.Scale, startPos.frame1.X.Offset + delta.X, startPos.frame1.Y.Scale, startPos.frame1.Y.Offset + delta.Y)
+        frame2.Position = UDim2.new(startPos.frame2.X.Scale, startPos.frame2.X.Offset + delta.X, startPos.frame2.Y.Scale, startPos.frame2.Y.Offset + delta.Y)
+        frame3.Position = UDim2.new(startPos.frame3.X.Scale, startPos.frame3.X.Offset + delta.X, startPos.frame3.Y.Scale, startPos.frame3.Y.Offset + delta.Y)
+        frame4.Position = UDim2.new(startPos.frame4.X.Scale, startPos.frame4.X.Offset + delta.X, startPos.frame4.Y.Scale, startPos.frame4.Y.Offset + delta.Y)
+    end
+end)
+
+userInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        isDragging = false
     end
 end)
 
 local isMinimized = false
-
-closeButton.MouseButton1Click:Connect(function()
-    screenGui:Destroy()
-end)
-
+closeButton.MouseButton1Click:Connect(function() screenGui:Destroy() end)
 minimizeButton.MouseButton1Click:Connect(function()
     isMinimized = not isMinimized
     frame1.Visible = not isMinimized
     frame2.Visible = not isMinimized
     frame4.Visible = not isMinimized
 end)
+
+createGameDropdowns()
